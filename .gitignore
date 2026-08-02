@@ -41,6 +41,5 @@ build_errors.txt
 build_output.txt
 test.js
 
-# Large media (optional — remove if you want them tracked)
-*.webm
-*.mp4
+# Large media
+screen-capture (13).webm
