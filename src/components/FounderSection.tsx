@@ -49,17 +49,46 @@ export const FounderSection: React.FC = () => {
           
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="lg:col-span-5 relative overflow-hidden rounded-2xl border border-white/10 h-[380px] sm:h-[420px] bg-panel-light">
-            <img
-              ref={imageRef}
-              src={founder.image}
-              alt={founder.name}
-              loading="lazy"
-              className="w-full h-[120%] object-cover object-center filter grayscale contrast-110 hover:grayscale-0 transition-all duration-500"
-            />
-            <div className="absolute bottom-4 left-4 bg-black/90 backdrop-blur-md px-4 py-2 rounded-xl border border-white/15 flex items-center gap-2">
-              <Terminal className="w-4 h-4 text-primary" />
-              <span className="font-mono text-xs font-bold text-paper">{founder.role}</span>
+          <div className="lg:col-span-5 relative overflow-hidden rounded-2xl border border-white/10 h-[380px] sm:h-[420px] bg-black/60 p-6 flex flex-col justify-between shadow-inner group">
+            {/* Ambient Glow */}
+            <div className="absolute -top-12 -left-12 w-48 h-48 bg-primary/20 rounded-full blur-2xl pointer-events-none group-hover:bg-primary/30 transition-all duration-700" />
+            
+            {/* Terminal Window Header */}
+            <div className="flex items-center justify-between border-b border-white/10 pb-4 relative z-10">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
+              </div>
+              <span className="font-mono text-[11px] text-slate/80">founder_architecture.ts</span>
+            </div>
+
+            {/* Founder Avatar Badge / Matrix Centerpiece */}
+            <div className="flex-grow flex flex-col items-center justify-center my-4 relative z-10">
+              <div className="w-24 h-24 rounded-2xl bg-panel border-2 border-primary/40 flex items-center justify-center shadow-lg shadow-primary/10 group-hover:border-primary transition-all duration-500 relative">
+                <span className="font-jakarta font-black text-3xl text-primary tracking-widest">
+                  {founder.name ? founder.name.split(' ').map(n => n[0]).join('') : 'DO'}
+                </span>
+                <span className="absolute -bottom-1.5 -right-1.5 w-4 h-4 rounded-full bg-emerald-500 border-2 border-black" />
+              </div>
+
+              <h4 className="font-jakarta font-extrabold text-lg text-paper mt-4">
+                {founder.name}
+              </h4>
+              <p className="font-mono text-xs text-primary/90 mt-0.5">
+                {founder.role}
+              </p>
+            </div>
+
+            {/* Terminal Footer Status */}
+            <div className="bg-panel-light/80 backdrop-blur-md px-4 py-3 rounded-xl border border-white/10 flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-primary" />
+                <span className="font-mono text-xs font-bold text-paper">System Active</span>
+              </div>
+              <span className="font-mono text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                100% Production Ready
+              </span>
             </div>
           </div>
 

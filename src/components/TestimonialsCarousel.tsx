@@ -67,14 +67,9 @@ export const TestimonialsCarousel: React.FC = () => {
               </p>
 
               <div className="flex items-center gap-4">
-                <img
-                  src={current.image}
-                  alt={current.author}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-primary"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop';
-                  }}
-                />
+                <div className="w-12 h-12 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center font-mono font-bold text-primary text-base shadow-lg shrink-0">
+                  {current.author ? current.author.charAt(0) : 'U'}
+                </div>
                 <div className="text-left">
                   <h4 className="font-jakarta font-black text-base text-paper">
                     {current.author}

@@ -383,7 +383,7 @@ const DEFAULT_SITE_DATA: SiteData = {
     tagline: "Building Scalable Digital Products",
     quote: "We don't just build software — we build solutions that scale, perform, and last. Every line of code at DO Company is written with purpose and precision.",
     bio: "Jayadev founded DO Company with a clear mission: deliver high-quality, production-ready software to businesses and startups worldwide — fast, reliable, and built to scale.",
-    image: "/images/mypicnbg.png",
+    image: "",
     github: "https://github.com/bimaljayakumar",
     linkedin: "https://linkedin.com/in/bimaljayakumar",
     twitter: "https://twitter.com",
@@ -398,7 +398,7 @@ const DEFAULT_SITE_DATA: SiteData = {
         name: "Bimal Jayakumar",
         role: "Lead Developer @ DO Company",
         specialty: "Full-Stack Web & Mobile Development",
-        image: "/images/mypic.jpeg",
+        image: "",
         tag: "Full-Stack Dev"
       }
     ]
@@ -413,7 +413,7 @@ const DEFAULT_SITE_DATA: SiteData = {
         author: "Sarah Jenkins",
         role: "CTO",
         company: "FlowState Technologies",
-        image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop"
+        image: ""
       },
       {
         id: "test-2",
@@ -421,7 +421,7 @@ const DEFAULT_SITE_DATA: SiteData = {
         author: "Michael Chang",
         role: "Founder",
         company: "Apex Analytics",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop"
+        image: ""
       }
     ]
   },

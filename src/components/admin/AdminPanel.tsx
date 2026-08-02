@@ -1140,20 +1140,9 @@ export const AdminPanel: React.FC = () => {
                           placeholder="https://... or upload image file"
                           className="flex-1 bg-black/70 border border-white/15 rounded-xl px-4 py-2.5 text-paper focus:border-primary focus:outline-none font-mono text-xs"
                         />
-                        {founderImage ? (
-                          <img
-                            src={founderImage}
-                            alt="Founder preview"
-                            className="w-12 h-12 rounded-xl object-cover border border-white/20 shadow-lg flex-shrink-0"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop';
-                            }}
-                          />
-                        ) : (
-                          <div className="w-12 h-12 rounded-xl bg-panel-light border border-white/10 flex items-center justify-center text-slate font-mono text-[10px] flex-shrink-0">
-                            No image
-                          </div>
-                        )}
+                        <div className="w-12 h-12 rounded-xl bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-sm shrink-0">
+                          {founderName ? founderName.charAt(0) : 'D'}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1290,11 +1279,9 @@ export const AdminPanel: React.FC = () => {
                   <div key={mentor.id} className="bg-black/60 border border-white/15 rounded-2xl p-5 space-y-4">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
-                        <img
-                          src={mentor.image}
-                          alt={mentor.name}
-                          className="w-14 h-14 rounded-2xl object-cover border border-white/15"
-                        />
+                        <div className="w-14 h-14 rounded-2xl bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-lg shrink-0">
+                          {mentor.name ? mentor.name.charAt(0) : 'M'}
+                        </div>
                         <div>
                           <h4 className="font-jakarta font-bold text-base text-paper">{mentor.name}</h4>
                           <span className="font-mono text-xs text-primary">{mentor.role}</span>
@@ -1393,14 +1380,9 @@ export const AdminPanel: React.FC = () => {
                             placeholder="https://... or upload local image file above"
                             className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
                           />
-                          <img
-                            src={mentor.image}
-                            alt={mentor.name}
-                            className="w-9 h-9 rounded-lg object-cover border border-white/15 flex-shrink-0"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop';
-                            }}
-                          />
+                          <div className="w-9 h-9 rounded-lg bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-xs shrink-0">
+                            {mentor.name ? mentor.name.charAt(0) : 'M'}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1471,14 +1453,9 @@ export const AdminPanel: React.FC = () => {
                   <div key={proj.id} className="bg-black/60 border border-white/15 rounded-2xl p-5 space-y-4">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-center gap-3">
-                        <img
-                          src={proj.image}
-                          alt={proj.title}
-                          className="w-16 h-12 rounded-xl object-cover border border-white/15"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop';
-                          }}
-                        />
+                        <div className="w-16 h-12 rounded-xl bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-xs shrink-0">
+                          PROJ
+                        </div>
                         <div>
                           <h4 className="font-jakarta font-bold text-base text-paper">{proj.title}</h4>
                           <span className="font-mono text-xs text-primary">{proj.category}</span>
@@ -1592,14 +1569,9 @@ export const AdminPanel: React.FC = () => {
                             placeholder="https://... or /images/... or upload image file"
                             className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
                           />
-                          <img
-                            src={proj.image}
-                            alt={proj.title}
-                            className="w-12 h-8 rounded-lg object-cover border border-white/15 flex-shrink-0"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop';
-                            }}
-                          />
+                          <div className="w-12 h-8 rounded-lg bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-[10px] shrink-0">
+                            PROJ
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1924,14 +1896,9 @@ export const AdminPanel: React.FC = () => {
                   <div key={test.id} className="bg-black/60 border border-white/15 rounded-2xl p-5 space-y-4">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
-                        <img
-                          src={test.image}
-                          alt={test.author}
-                          className="w-12 h-12 rounded-full object-cover border border-white/15"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop';
-                          }}
-                        />
+                        <div className="w-12 h-12 rounded-full bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-sm shrink-0">
+                          {test.author ? test.author.charAt(0) : 'T'}
+                        </div>
                         <div>
                           <h4 className="font-jakarta font-bold text-sm text-paper">{test.author}</h4>
                           <span className="font-mono text-xs text-primary">{test.role} {test.company ? `@ ${test.company}` : ''}</span>
@@ -2032,14 +1999,9 @@ export const AdminPanel: React.FC = () => {
                             placeholder="https://... or upload local image file above"
                             className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
                           />
-                          <img
-                            src={test.image}
-                            alt={test.author}
-                            className="w-10 h-10 rounded-full object-cover border border-white/15 flex-shrink-0"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop';
-                            }}
-                          />
+                          <div className="w-10 h-10 rounded-full bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-xs shrink-0">
+                            {test.author ? test.author.charAt(0) : 'T'}
+                          </div>
                         </div>
                       </div>
                     </div>

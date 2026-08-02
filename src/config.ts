@@ -92,7 +92,6 @@ export const config = {
             title: "SaaS Dashboard",
             category: "Web App",
             technologies: "React, Node.js, PostgreSQL, TypeScript, Docker, AWS",
-            image: "/images/project-1.webp",
             description: "A full-featured SaaS analytics dashboard with real-time data visualization, role-based access control, and a multi-tenant architecture built for scale."
         },
         {
@@ -100,7 +99,6 @@ export const config = {
             title: "E-Commerce Platform",
             category: "Full Stack",
             technologies: "Next.js, Node.js, MongoDB, Stripe, TailwindCSS",
-            image: "/images/project-2.webp",
             description: "A performant e-commerce storefront with product catalog, cart, secure checkout, order management, and an admin dashboard for inventory control."
         },
         {
@@ -108,7 +106,6 @@ export const config = {
             title: "Mobile Banking App",
             category: "Mobile App",
             technologies: "React Native, Expo, Firebase, TypeScript, REST APIs",
-            image: "/images/project-3.webp",
             description: "A cross-platform mobile banking application with biometric authentication, real-time transaction tracking, and push notification support for iOS and Android."
         },
         {
@@ -116,7 +113,6 @@ export const config = {
             title: "Website Builder",
             category: "Builder Tool",
             technologies: "React, Next.js, Node.js, MongoDB, TailwindCSS",
-            image: "/images/project-4.webp",
             description: "A drag-and-drop website builder platform enabling non-technical users to create, customize, and publish professional websites without writing code."
         },
         {
@@ -124,7 +120,6 @@ export const config = {
             title: "Corporate Marketing Site",
             category: "Web Design",
             technologies: "Next.js, TypeScript, GSAP, TailwindCSS, Vercel",
-            image: "/images/project-5.webp",
             description: "A high-performance corporate marketing website with scroll-driven animations, optimized Core Web Vitals, and a headless CMS integration for easy content updates."
         },
         {
@@ -132,7 +127,6 @@ export const config = {
             title: "Project Management Tool",
             category: "Web App",
             technologies: "React, Node.js, Socket.io, PostgreSQL, Docker",
-            image: "/images/placeholder.webp",
             description: "A real-time project management platform with kanban boards, team collaboration features, file attachments, and live activity feeds powered by WebSockets."
         },
         {
@@ -140,7 +134,6 @@ export const config = {
             title: "Healthcare Portal",
             category: "Full Stack",
             technologies: "Next.js, Node.js, PostgreSQL, TypeScript, AWS",
-            image: "/images/placeholder.webp",
             description: "A secure patient and provider portal with appointment scheduling, medical record management, and HIPAA-compliant data handling built on AWS infrastructure."
         },
         {
@@ -148,7 +141,6 @@ export const config = {
             title: "Startup Landing Page",
             category: "Web Design",
             technologies: "Next.js, GSAP, TailwindCSS, Figma, Vercel",
-            image: "/images/placeholder.webp",
             description: "A conversion-focused startup landing page with animated hero sections, feature showcases, pricing tables, and integrated lead capture forms."
         }
     ],

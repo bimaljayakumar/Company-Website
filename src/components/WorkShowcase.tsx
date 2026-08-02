@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Code2 } from 'lucide-react';
 import { useSiteData } from '../context/DataContext';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -72,18 +72,34 @@ export const WorkShowcase: React.FC = () => {
                 key={project.id || idx}
                 className="w-[320px] sm:w-[480px] lg:w-[560px] flex-shrink-0 group rounded-3xl bg-panel border border-white/10 overflow-hidden hover:border-primary/50 transition-all duration-300 shadow-2xl flex flex-col justify-between transform-gpu"
               >
-                <div className="relative h-[240px] sm:h-[320px] w-full overflow-hidden bg-panel-light">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-100"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop';
-                    }}
-                  />
-                  <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 font-mono text-xs text-primary">
-                    {project.year || '2025'}
+                <div className="relative h-[200px] sm:h-[260px] w-full overflow-hidden bg-black/80 border-b border-white/10 p-6 flex flex-col justify-between group">
+                  {/* Subtle Grid Lines & Ambient Glow */}
+                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20 pointer-events-none" />
+                  <div className="absolute -top-10 -left-10 w-40 h-40 bg-primary/15 rounded-full blur-3xl group-hover:bg-primary/30 transition-all duration-500 pointer-events-none" />
+
+                  {/* Header Top Row */}
+                  <div className="flex items-center justify-between relative z-10">
+                    <span className="font-mono text-xs text-primary font-bold tracking-wider">
+                      PROJECT // 0{idx + 1}
+                    </span>
+                    <div className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 font-mono text-xs text-primary">
+                      {project.year || '2025'}
+                    </div>
+                  </div>
+
+                  {/* Center Icon Graphic */}
+                  <div className="flex items-center justify-center my-auto relative z-10">
+                    <div className="w-16 h-16 rounded-2xl bg-panel border border-white/15 flex items-center justify-center group-hover:border-primary/60 group-hover:scale-110 transition-all duration-500 shadow-xl">
+                      <Code2 className="w-8 h-8 text-primary" />
+                    </div>
+                  </div>
+
+                  {/* Footer Tag */}
+                  <div className="flex items-center justify-between relative z-10">
+                    <span className="font-mono text-[10px] text-slate uppercase tracking-widest">
+                      {project.category}
+                    </span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   </div>
                 </div>
 
