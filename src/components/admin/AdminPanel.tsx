@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Layout, User, Briefcase, Wrench, Layers, MessageSquare, Shield, ExternalLink,
-  LogOut, Save, Plus, Trash2, CheckCircle, CheckCircle2, RefreshCw, Download, Upload, Eye, EyeOff, ShieldAlert, ShieldCheck
+  LogOut, Save, Plus, Trash2, CheckCircle, CheckCircle2, RefreshCw, Download, Upload, Eye, EyeOff, ShieldAlert, ShieldCheck,
+  Cloud
 } from 'lucide-react';
 import { useSiteData } from '../../context/DataContext';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import { uploadToCloudinary, getCloudinaryConfig } from '../../utils/cloudinary';
 
 export const AdminPanel: React.FC = () => {
   const navigate = useNavigate();
@@ -45,34 +47,72 @@ export const AdminPanel: React.FC = () => {
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [jsonInput, setJsonInput] = useState('');
 
-  // Founder Image Upload State
+  // Media & Cloudinary Upload State
+  const [isUploadingMedia, setIsUploadingMedia] = useState(false);
+  const [uploadProgressText, setUploadProgressText] = useState('');
+  const [cloudinaryCloudName, setCloudinaryCloudName] = useState(data.cloudinary?.cloudName || '');
+  const [cloudinaryUploadPreset, setCloudinaryUploadPreset] = useState(data.cloudinary?.uploadPreset || '');
+
+  // Founder & Hero State
   const [founderImage, setFounderImage] = useState(data.founder.image || '');
   const [heroVideoUrl, setHeroVideoUrl] = useState(data.hero.videoUrl || '/hero-background.mp4');
   const [heroVideoOpacity, setHeroVideoOpacity] = useState(data.hero.videoOpacity ?? 20);
 
   useEffect(() => {
-    if (data.founder.image) {
-      setFounderImage(data.founder.image);
-    }
+    if (data.founder.image !== undefined) setFounderImage(data.founder.image);
     if (data.hero.videoUrl) setHeroVideoUrl(data.hero.videoUrl);
     if (data.hero.videoOpacity !== undefined) setHeroVideoOpacity(data.hero.videoOpacity);
-  }, [data.founder.image, data.hero.videoUrl, data.hero.videoOpacity]);
+    if (data.cloudinary?.cloudName !== undefined) setCloudinaryCloudName(data.cloudinary.cloudName);
+    if (data.cloudinary?.uploadPreset !== undefined) setCloudinaryUploadPreset(data.cloudinary.uploadPreset);
+  }, [data.founder.image, data.hero.videoUrl, data.hero.videoOpacity, data.cloudinary]);
 
-  const handleFounderImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+  const handleFileUpload = async (
+    file: File,
+    onSuccess: (url: string) => void,
+    successMessage: string = 'File uploaded successfully!'
+  ) => {
+    const config = getCloudinaryConfig({
+      cloudName: cloudinaryCloudName || data.cloudinary?.cloudName,
+      uploadPreset: cloudinaryUploadPreset || data.cloudinary?.uploadPreset,
+    });
+
+    if (config.cloudName && config.uploadPreset) {
+      setIsUploadingMedia(true);
+      setUploadProgressText(`Uploading ${file.name} to Cloudinary...`);
+      try {
+        const url = await uploadToCloudinary(file, config);
+        onSuccess(url);
+        showToast(`Uploaded to Cloudinary CDN & saved!`, false);
+      } catch (err: any) {
+        console.error(err);
+        showToast(`Cloudinary Upload Failed: ${err.message}`, false);
+      } finally {
+        setIsUploadingMedia(false);
+        setUploadProgressText('');
+      }
+    } else {
       if (file.size > 8 * 1024 * 1024) {
-        showToast('Image file size must be less than 8MB.', false);
+        showToast('File > 8MB. Configure Cloudinary Cloud Name & Upload Preset in Settings for CDN video/photo hosting.', false);
         return;
       }
       const reader = new FileReader();
       reader.onload = (evt) => {
         if (evt.target?.result) {
-          setFounderImage(evt.target.result as string);
-          showToast('Founder portrait image loaded! Click "Save Founder Changes" to apply.', false);
+          onSuccess(evt.target.result as string);
+          showToast(`${successMessage} (Tip: Configure Cloudinary in settings to host files on high-speed CDN)`, false);
         }
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFounderImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleFileUpload(file, (url) => {
+        setFounderImage(url);
+        updateSection('founder', { image: url });
+      }, 'Founder image loaded!');
     }
   };
 
@@ -637,24 +677,10 @@ export const AdminPanel: React.FC = () => {
                           onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                              if (file.size > 150 * 1024 * 1024) {
-                                showToast('For 4K videos >150MB, place file in /public/ and enter file path e.g. /my-4k-video.mp4 below.', false);
-                                return;
-                              }
-                              const reader = new FileReader();
-                              reader.onload = (evt) => {
-                                if (evt.target?.result) {
-                                  const videoDataUrl = evt.target.result as string;
-                                  try {
-                                    setHeroVideoUrl(videoDataUrl);
-                                    updateSection('hero', { videoUrl: videoDataUrl });
-                                    showToast('4K Background video loaded successfully!', false);
-                                  } catch (err) {
-                                    showToast('Video data exceeds browser storage limit. Place your 4K video in /public/ folder and enter path e.g. /video.mp4', false);
-                                  }
-                                }
-                              };
-                              reader.readAsDataURL(file);
+                              handleFileUpload(file, (url) => {
+                                setHeroVideoUrl(url);
+                                updateSection('hero', { videoUrl: url });
+                              }, 'Hero Background Video loaded!');
                             }
                           }}
                         />
@@ -1355,18 +1381,9 @@ export const AdminPanel: React.FC = () => {
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
-                                if (file.size > 8 * 1024 * 1024) {
-                                  showToast('Image file size must be less than 8MB.', false);
-                                  return;
-                                }
-                                const reader = new FileReader();
-                                reader.onload = (evt) => {
-                                  if (evt.target?.result) {
-                                    updateArrayItem('mentors', 'items', mentor.id, { image: evt.target.result as string });
-                                    showToast(`Image loaded for ${mentor.name}!`, false);
-                                  }
-                                };
-                                reader.readAsDataURL(file);
+                                handleFileUpload(file, (url) => {
+                                  updateArrayItem('mentors', 'items', mentor.id, { image: url });
+                                }, `Image loaded for ${mentor.name}!`);
                               }
                             }}
                           />
@@ -1544,18 +1561,9 @@ export const AdminPanel: React.FC = () => {
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
-                                if (file.size > 8 * 1024 * 1024) {
-                                  showToast('Image file size must be less than 8MB.', false);
-                                  return;
-                                }
-                                const reader = new FileReader();
-                                reader.onload = (evt) => {
-                                  if (evt.target?.result) {
-                                    updateArrayItem('projects', 'items', proj.id, { image: evt.target.result as string });
-                                    showToast(`Image loaded for ${proj.title}!`, false);
-                                  }
-                                };
-                                reader.readAsDataURL(file);
+                                handleFileUpload(file, (url) => {
+                                  updateArrayItem('projects', 'items', proj.id, { image: url });
+                                }, `Image loaded for ${proj.title}!`);
                               }
                             }}
                           />
@@ -1644,6 +1652,35 @@ export const AdminPanel: React.FC = () => {
                       placeholder="Engineering services built for speed, scale, and longevity."
                       className="w-full bg-black/80 border border-white/15 rounded-lg px-3.5 py-2.5 text-paper focus:border-primary focus:outline-none font-bold"
                     />
+                  </div>
+                  <div className="md:col-span-2 space-y-2 pt-2 border-t border-white/10">
+                    <label className="block font-mono text-[10px] text-slate font-bold uppercase">Services Background Video (URL or File Upload)</label>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="text"
+                        value={data.services.videoUrl || ''}
+                        onChange={(e) => updateSection('services', { videoUrl: e.target.value })}
+                        placeholder="/services-background.mp4 or https://..."
+                        className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                      />
+                      <label className="cursor-pointer px-4 py-2 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-all font-mono text-xs font-bold shrink-0 flex items-center gap-1.5">
+                        <Upload className="w-3.5 h-3.5" />
+                        <span>Upload Video</span>
+                        <input
+                          type="file"
+                          accept="video/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              handleFileUpload(file, (url) => {
+                                updateSection('services', { videoUrl: url });
+                              }, 'Services background video loaded!');
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1974,18 +2011,9 @@ export const AdminPanel: React.FC = () => {
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
-                                if (file.size > 8 * 1024 * 1024) {
-                                  showToast('Image file size must be less than 8MB.', false);
-                                  return;
-                                }
-                                const reader = new FileReader();
-                                reader.onload = (evt) => {
-                                  if (evt.target?.result) {
-                                    updateArrayItem('testimonials', 'items', test.id, { image: evt.target.result as string });
-                                    showToast(`Portrait image loaded for ${test.author}!`, false);
-                                  }
-                                };
-                                reader.readAsDataURL(file);
+                                handleFileUpload(file, (url) => {
+                                  updateArrayItem('testimonials', 'items', test.id, { image: url });
+                                }, `Portrait image loaded for ${test.author}!`);
                               }
                             }}
                           />
@@ -2492,6 +2520,79 @@ export const AdminPanel: React.FC = () => {
                 </button>
               </form>
 
+              {/* CLOUDINARY MEDIA CDN SETTINGS */}
+              <div className="bg-black/60 border border-primary/30 rounded-3xl p-6 space-y-4 font-sans text-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/40 flex items-center justify-center text-primary">
+                      <Cloud className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-mono text-xs font-bold text-primary uppercase tracking-wider">// CLOUDINARY MEDIA CDN SETTINGS</h3>
+                      <p className="font-sans text-xs text-slate mt-0.5">Upload photos and 4K videos permanently to Cloudinary CDN for instant worldwide streaming on Vercel.</p>
+                    </div>
+                  </div>
+                  {getCloudinaryConfig({ cloudName: cloudinaryCloudName, uploadPreset: cloudinaryUploadPreset }).cloudName ? (
+                    <span className="font-mono text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-xl flex items-center gap-1.5 font-bold">
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>Cloudinary Active</span>
+                    </span>
+                  ) : (
+                    <span className="font-mono text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-lg">
+                      Not Configured
+                    </span>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block font-mono text-[10px] text-slate font-bold uppercase mb-1">Cloudinary Cloud Name</label>
+                    <input
+                      type="text"
+                      value={cloudinaryCloudName}
+                      onChange={(e) => setCloudinaryCloudName(e.target.value)}
+                      placeholder="e.g. dxy123abc or from .env"
+                      className="w-full bg-black/80 border border-white/15 rounded-xl px-4 py-2.5 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-mono text-[10px] text-slate font-bold uppercase mb-1">Unsigned Upload Preset</label>
+                    <input
+                      type="text"
+                      value={cloudinaryUploadPreset}
+                      onChange={(e) => setCloudinaryUploadPreset(e.target.value)}
+                      placeholder="e.g. company_preset or ml_default"
+                      className="w-full bg-black/80 border border-white/15 rounded-xl px-4 py-2.5 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      updateSection('cloudinary', {
+                        cloudName: cloudinaryCloudName.trim(),
+                        uploadPreset: cloudinaryUploadPreset.trim()
+                      });
+                      showToast('Cloudinary CDN settings saved permanently!', false);
+                    }}
+                    className="px-5 py-2.5 rounded-xl bg-primary text-ink font-mono text-xs font-bold flex items-center gap-2 cursor-pointer hover:scale-102 transition-all shadow-md shadow-primary/20"
+                  >
+                    <Save className="w-4 h-4" />
+                    <span>Save Cloudinary Settings</span>
+                  </button>
+                </div>
+
+                <div className="bg-panel-light/60 p-4 rounded-2xl border border-white/10 font-mono text-[11px] text-slate/90 space-y-1.5">
+                  <p className="font-bold text-primary">// Free 60-Second Cloudinary Setup (100% Free 25GB Storage & Bandwidth):</p>
+                  <p>1. Create a free account at <a href="https://cloudinary.com" target="_blank" rel="noreferrer" className="text-primary underline">Cloudinary.com</a>.</p>
+                  <p>2. Copy your <strong className="text-paper">Cloud Name</strong> from the dashboard & paste it above.</p>
+                  <p>3. Go to Cloudinary Dashboard → Settings ⚙️ → Upload → Scroll down to <strong className="text-paper">Upload presets</strong> → Click <strong className="text-paper">Add upload preset</strong>.</p>
+                  <p>4. Set Signing Mode to <strong className="text-emerald-400">Unsigned</strong> → Click Save → Copy Preset Name & paste it above!</p>
+                </div>
+              </div>
+
               {/* Data Management, Permanent Baseline & Restore */}
               <div className="bg-black/60 border border-white/15 rounded-3xl p-6 space-y-5 font-sans text-sm">
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
@@ -2669,6 +2770,20 @@ export const AdminPanel: React.FC = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Cloudinary Upload Progress Overlay */}
+      {isUploadingMedia && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-[10000] flex flex-col items-center justify-center text-center p-6 select-none">
+          <div className="w-16 h-16 rounded-2xl bg-panel border-2 border-primary flex items-center justify-center text-primary shadow-2xl shadow-primary/20 animate-bounce mb-4">
+            <Cloud className="w-8 h-8 animate-pulse" />
+          </div>
+          <h3 className="font-jakarta font-black text-xl text-paper mb-2">Uploading to Cloudinary CDN...</h3>
+          <p className="font-mono text-xs text-primary mb-4">{uploadProgressText}</p>
+          <div className="w-64 h-1.5 bg-white/10 rounded-full overflow-hidden">
+            <div className="h-full bg-primary animate-pulse w-full" />
           </div>
         </div>
       )}

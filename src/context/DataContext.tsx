@@ -197,6 +197,11 @@ export interface ToolkitData {
   title: string;
 }
 
+export interface CloudinaryConfigData {
+  cloudName: string;
+  uploadPreset: string;
+}
+
 export interface SiteData {
   hero: HeroData;
   about: AboutData;
@@ -210,9 +215,14 @@ export interface SiteData {
   cta: CtaBannerData;
   footer: FooterData;
   messages: MessageItem[];
+  cloudinary?: CloudinaryConfigData;
 }
 
 const DEFAULT_SITE_DATA: SiteData = {
+  cloudinary: {
+    cloudName: "",
+    uploadPreset: ""
+  },
   hero: {
     eyebrow: "We Build. We Launch. We Educate.",
     headlineWord1: "BUILD",
