@@ -1,0 +1,317 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-ink: #000000;
+    --color-panel: #0a0a0c;
+    --color-primary: #00ff9d;
+    --color-secondary: #00d2ff;
+    --color-slate: #94a3b8;
+    --color-paper: #ffffff;
+  }
+
+  html {
+    scroll-behavior: smooth !important;
+    color-scheme: dark;
+    background-color: #000000;
+  }
+
+  body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Pure Black Custom Utilities */
+.bg-ink { background-color: #000000; }
+.bg-panel { background-color: #0a0a0c; }
+.bg-panel-light { background-color: #121216; }
+.bg-primary { background-color: #00ff9d; }
+.bg-secondary { background-color: #00d2ff; }
+
+.text-ink { color: #000000; }
+.text-panel { color: #0a0a0c; }
+.text-primary { color: #00ff9d; }
+.text-secondary { color: #00d2ff; }
+.text-slate { color: #94a3b8; }
+.text-paper { color: #ffffff; }
+
+.border-primary { border-color: #00ff9d; }
+.border-secondary { border-color: #00d2ff; }
+
+@font-face {
+  font-family: 'MatrixType';
+  src: url('/fonts/MatrixType-Regular.ttf') format('truetype'),
+       url('/fonts/MatrixType-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MatrixType';
+  src: url('/fonts/MatrixType-Bold.ttf') format('truetype'),
+       url('/fonts/MatrixType-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MatrixType Display';
+  src: url('/fonts/MatrixTypeDisplay-Regular.ttf') format('truetype'),
+       url('/fonts/MatrixTypeDisplay-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MatrixType Display';
+  src: url('/fonts/MatrixTypeDisplay-Bold.ttf') format('truetype'),
+       url('/fonts/MatrixTypeDisplay-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
+.font-serif { font-family: 'Instrument Serif', serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+.font-sans { font-family: 'Inter', sans-serif; }
+.font-pixel { font-family: 'MatrixType', monospace; }
+.font-matrix { font-family: 'MatrixType', monospace; }
+.font-matrix-display { font-family: 'MatrixType Display', monospace; }
+
+/* Lenis Smooth Scroll Styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Custom Pure Black Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e1e24;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff9d;
+}
+
+/* Pure Obsidian Glassmorphism */
+.glass-panel {
+  background: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.liquid-glass-card {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.8);
+}
+
+.glow-border {
+  position: relative;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(0, 255, 157, 0.5), transparent 50%, rgba(0, 210, 255, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+/* Rotating Conic Gradient for CTA */
+@keyframes spin-conic {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-conic-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-conic-glow::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 0deg 180deg, #00ff9d 270deg, #00d2ff 360deg);
+  animation: spin-conic 8s linear infinite;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* Custom Cursor Rules */
+@media (hover: hover) and (pointer: fine) {
+  body.custom-cursor-active {
+    cursor: none;
+  }
+  body.custom-cursor-active a,
+  body.custom-cursor-active button,
+  body.custom-cursor-active [role="button"] {
+    cursor: none;
+  }
+}
+
+/* Clean Crisp Matrix Glyph Light Blink (Blinks Twice per cycle) */
+@keyframes matrixGlyphLightBlinkTwice {
+  0%, 2% {
+    opacity: 0.3;
+    color: rgba(0, 255, 157, 0.3);
+    text-shadow: 0 0 2px rgba(0, 255, 157, 0.2);
+  }
+  /* Blink 1: Bright Flash ON */
+  8%, 14% {
+    opacity: 1;
+    color: #00ff9d;
+    text-shadow: 0 0 8px #00ff9d, 0 0 18px rgba(0, 255, 157, 0.9);
+  }
+  /* Blink 1: Dark OFF */
+  20%, 24% {
+    opacity: 0.25;
+    color: rgba(0, 255, 157, 0.25);
+    text-shadow: none;
+  }
+  /* Blink 2: Bright Flash ON */
+  30%, 36% {
+    opacity: 1;
+    color: #00ff9d;
+    text-shadow: 0 0 10px #00ff9d, 0 0 22px rgba(0, 255, 157, 0.95);
+  }
+  /* Blink 2: Dark OFF */
+  42%, 46% {
+    opacity: 0.3;
+    color: rgba(0, 255, 157, 0.3);
+    text-shadow: none;
+  }
+  /* Steady Vibrant Matrix Light Pulse */
+  54%, 88% {
+    opacity: 1;
+    color: #00ff9d;
+    text-shadow: 0 0 6px #00ff9d, 0 0 14px rgba(0, 255, 157, 0.75);
+  }
+  96%, 100% {
+    opacity: 0.3;
+    color: rgba(0, 255, 157, 0.3);
+    text-shadow: none;
+  }
+}
+
+.matrix-glyph-char {
+  font-family: 'MatrixType', monospace;
+  display: inline-block;
+  animation: matrixGlyphLightBlinkTwice 3.6s ease-in-out infinite;
+  will-change: opacity, text-shadow;
+  filter: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: visible !important;
+}
+
+/* Pixel / Letter-level Asynchronous Shimmering LED Matrix Animation */
+@keyframes ledDotShimmer {
+  0%, 100% {
+    opacity: 0.65;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
+  }
+  25% {
+    opacity: 1;
+    color: #ffffff;
+    text-shadow: 0 0 6px #ffffff, 0 0 14px rgba(255, 255, 255, 0.85);
+  }
+  50% {
+    opacity: 0.4;
+    text-shadow: none;
+  }
+  75% {
+    opacity: 1;
+    color: #ffffff;
+    text-shadow: 0 0 8px #ffffff, 0 0 18px rgba(255, 255, 255, 0.95);
+  }
+}
+
+.led-word-container {
+  display: inline-flex;
+  align-items: center;
+  background: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  overflow: visible !important;
+}
+
+.led-dot {
+  font-family: 'MatrixType', monospace;
+  display: inline-block;
+  color: #ffffff;
+  animation: ledDotShimmer 2.4s ease-in-out infinite;
+  will-change: opacity, text-shadow;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  overflow: visible !important;
+}
+
+.led-dot-1 { animation-duration: 2.1s; }
+.led-dot-2 { animation-duration: 2.7s; }
+.led-dot-3 { animation-duration: 1.9s; }
+.led-dot-4 { animation-duration: 2.5s; }
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
