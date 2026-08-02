@@ -67,9 +67,17 @@ export const TestimonialsCarousel: React.FC = () => {
               </p>
 
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center font-mono font-bold text-primary text-base shadow-lg shrink-0">
-                  {current.author ? current.author.charAt(0) : 'U'}
-                </div>
+                {current.image ? (
+                  <img
+                    src={current.image}
+                    alt={current.author}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-primary shrink-0"
+                  />
+                ) : (
+                  <div className="w-12 h-12 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center font-mono font-bold text-primary text-base shadow-lg shrink-0">
+                    {current.author ? current.author.charAt(0) : 'U'}
+                  </div>
+                )}
                 <div className="text-left">
                   <h4 className="font-jakarta font-black text-base text-paper">
                     {current.author}

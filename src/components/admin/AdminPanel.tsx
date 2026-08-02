@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Layout, User, Briefcase, Wrench, Layers, MessageSquare, Shield, ExternalLink,
-  LogOut, Save, Plus, Trash2, CheckCircle, RefreshCw, Download, Upload, Eye, EyeOff, ShieldAlert
+  LogOut, Save, Plus, Trash2, CheckCircle, CheckCircle2, RefreshCw, Download, Upload, Eye, EyeOff, ShieldAlert, ShieldCheck
 } from 'lucide-react';
 import { useSiteData } from '../../context/DataContext';
 import { useAdminAuth } from '../../context/AdminAuthContext';
@@ -17,6 +17,9 @@ export const AdminPanel: React.FC = () => {
     deleteArrayItem,
     deleteMessage,
     resetToDefaults,
+    setAsPermanentDefaults,
+    resetToFactoryDefaults,
+    hasPermanentDefaults,
     importDataJSON
   } = useSiteData();
 
@@ -2489,11 +2492,52 @@ export const AdminPanel: React.FC = () => {
                 </button>
               </form>
 
-              {/* Data Backup & Restore */}
-              <div className="bg-black/60 border border-white/15 rounded-3xl p-6 space-y-4 font-sans text-sm">
-                <h3 className="font-mono text-xs font-bold text-primary uppercase tracking-wider">// DATA BACKUP & RESTORE</h3>
+              {/* Data Management, Permanent Baseline & Restore */}
+              <div className="bg-black/60 border border-white/15 rounded-3xl p-6 space-y-5 font-sans text-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+                  <div>
+                    <h3 className="font-mono text-xs font-bold text-primary uppercase tracking-wider">// PERMANENT BASELINE & DATA BACKUP</h3>
+                    <p className="font-sans text-xs text-slate mt-1">Lock in all your current edits as permanent defaults or backup/restore site state.</p>
+                  </div>
+                  {hasPermanentDefaults && (
+                    <span className="font-mono text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-xl flex items-center gap-1.5 font-bold">
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>Custom Permanent Defaults Locked</span>
+                    </span>
+                  )}
+                </div>
 
                 <div className="flex flex-wrap items-center gap-4">
+                  {/* Set Current Details as Permanent Defaults */}
+                  <button
+                    onClick={() => {
+                      if (window.confirm("Lock all current site details (custom copy, uploaded images, video URLs, and project items) as your new Permanent Default baseline?")) {
+                        setAsPermanentDefaults();
+                        addAuditLog("PERMANENT_DEFAULTS_SAVED", "Saved current site state as Permanent Defaults baseline");
+                        showToast("All current site details locked as Permanent Defaults!");
+                      }
+                    }}
+                    className="px-5 py-3 rounded-xl bg-primary text-ink font-mono text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-lg shadow-primary/20 hover:scale-102"
+                  >
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>Set Current Details as Permanent Defaults</span>
+                  </button>
+
+                  {/* Reset to Permanent Defaults */}
+                  <button
+                    onClick={() => {
+                      if (window.confirm("Reset all site data back to your saved Permanent Defaults?")) {
+                        resetToDefaults();
+                        showToast("Site data reset to your saved Permanent Defaults.");
+                      }
+                    }}
+                    className="px-5 py-3 rounded-xl bg-panel-light border border-white/15 text-paper hover:border-primary font-mono text-xs flex items-center gap-2 transition-all cursor-pointer"
+                  >
+                    <RefreshCw className="w-4 h-4 text-primary" />
+                    <span>Reset to Permanent Defaults</span>
+                  </button>
+
+                  {/* Download Backup JSON */}
                   <button
                     onClick={handleExportData}
                     className="px-5 py-3 rounded-xl bg-panel-light border border-white/15 text-paper hover:border-primary font-mono text-xs flex items-center gap-2 transition-all cursor-pointer"
@@ -2502,17 +2546,18 @@ export const AdminPanel: React.FC = () => {
                     <span>Download Backup JSON</span>
                   </button>
 
+                  {/* Restore Factory Original Code Template */}
                   <button
                     onClick={() => {
-                      if (window.confirm("Are you sure you want to reset all site data to original defaults?")) {
-                        resetToDefaults();
-                        showToast("Site data reset to original defaults.");
+                      if (window.confirm("WARNING: This will clear your custom Permanent Defaults and revert to the factory original code template. Proceed?")) {
+                        resetToFactoryDefaults();
+                        showToast("Site reset to factory original code template.");
                       }
                     }}
                     className="px-5 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 font-mono text-xs flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <RefreshCw className="w-4 h-4" />
-                    <span>Reset All Data to Defaults</span>
+                    <span>Restore Factory Original</span>
                   </button>
                 </div>
 

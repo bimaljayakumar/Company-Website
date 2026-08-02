@@ -13,7 +13,7 @@ export const ServicesSection: React.FC = () => {
     <section id="services" className="py-24 sm:py-32 bg-black relative overflow-hidden">
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
         <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-35 mix-blend-screen">
-          <source src="/services-background.mp4" type="video/mp4" />
+          <source src={services.videoUrl || "/services-background.mp4"} type="video/mp4" />
         </video>
       </div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black pointer-events-none z-0" />

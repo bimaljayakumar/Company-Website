@@ -68,6 +68,7 @@ export interface ServiceItem {
 export interface ServicesData {
   eyebrow: string;
   title: string;
+  videoUrl?: string;
   items: ServiceItem[];
 }
 
@@ -476,6 +477,19 @@ const DEFAULT_SITE_DATA: SiteData = {
 };
 
 const STORAGE_KEY = "docompany_portfolio_site_data_v1";
+const PERMANENT_DEFAULT_KEY = "docompany_permanent_default_data_v1";
+
+const getBaselineDefaults = (): SiteData => {
+  try {
+    const customDefault = localStorage.getItem(PERMANENT_DEFAULT_KEY);
+    if (customDefault) {
+      return { ...DEFAULT_SITE_DATA, ...JSON.parse(customDefault) };
+    }
+  } catch (e) {
+    console.error("Failed to load permanent defaults:", e);
+  }
+  return DEFAULT_SITE_DATA;
+};
 
 interface DataContextType {
   data: SiteData;
@@ -486,22 +500,30 @@ interface DataContextType {
   addMessage: (msg: { name: string; email: string; subject?: string; message: string }) => void;
   deleteMessage: (id: string) => void;
   resetToDefaults: () => void;
+  setAsPermanentDefaults: () => void;
+  resetToFactoryDefaults: () => void;
+  hasPermanentDefaults: boolean;
   importDataJSON: (jsonString: string) => boolean;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [hasPermanentDefaults, setHasPermanentDefaults] = useState<boolean>(() => {
+    return Boolean(localStorage.getItem(PERMANENT_DEFAULT_KEY));
+  });
+
   const [data, setData] = useState<SiteData>(() => {
+    const baseline = getBaselineDefaults();
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return { ...DEFAULT_SITE_DATA, ...JSON.parse(saved) };
+        return { ...baseline, ...JSON.parse(saved) };
       }
     } catch (e) {
       console.error("Failed to load local site data:", e);
     }
-    return DEFAULT_SITE_DATA;
+    return baseline;
   });
 
   useEffect(() => {
@@ -615,15 +637,38 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const resetToDefaults = () => {
+    const baseline = getBaselineDefaults();
+    setData(baseline);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(baseline));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const setAsPermanentDefaults = () => {
+    try {
+      localStorage.setItem(PERMANENT_DEFAULT_KEY, JSON.stringify(data));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      setHasPermanentDefaults(true);
+    } catch (e) {
+      console.error("Failed to set permanent defaults:", e);
+    }
+  };
+
+  const resetToFactoryDefaults = () => {
     setData(DEFAULT_SITE_DATA);
+    localStorage.removeItem(PERMANENT_DEFAULT_KEY);
     localStorage.removeItem(STORAGE_KEY);
+    setHasPermanentDefaults(false);
   };
 
   const importDataJSON = (jsonString: string): boolean => {
     try {
       const parsed = JSON.parse(jsonString);
       if (parsed && typeof parsed === 'object') {
-        setData({ ...DEFAULT_SITE_DATA, ...parsed });
+        const baseline = getBaselineDefaults();
+        setData({ ...baseline, ...parsed });
         return true;
       }
     } catch (e) {
@@ -643,6 +688,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         addMessage,
         deleteMessage,
         resetToDefaults,
+        setAsPermanentDefaults,
+        resetToFactoryDefaults,
+        hasPermanentDefaults,
         importDataJSON
       }}
     >
