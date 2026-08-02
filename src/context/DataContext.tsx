@@ -378,52 +378,28 @@ const DEFAULT_SITE_DATA: SiteData = {
   founder: {
     eyebrow: "// FOUNDER",
     headline: "Led by someone who still writes code.",
-    name: "Marcus Vance",
+    name: "Jayadev",
     role: "CEO & Lead Architect",
-    tagline: "12+ Years Building Scalable Systems",
-    quote: "We don't delegate engineering quality to third-party offshore teams. At DO Company, every architecture decision is vetted by builders who have scaled systems to millions of users.",
-    bio: "Marcus founded DO Company with a single mission: bring high-end engineering standards and zero-fluff delivery to clients looking for genuine technical excellence.",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop",
-    github: "https://github.com",
-    linkedin: "https://linkedin.com",
+    tagline: "Building Scalable Digital Products",
+    quote: "We don't just build software — we build solutions that scale, perform, and last. Every line of code at DO Company is written with purpose and precision.",
+    bio: "Jayadev founded DO Company with a clear mission: deliver high-quality, production-ready software to businesses and startups worldwide — fast, reliable, and built to scale.",
+    image: "/images/mypicnbg.png",
+    github: "https://github.com/bimaljayakumar",
+    linkedin: "https://linkedin.com/in/bimaljayakumar",
     twitter: "https://twitter.com",
     contributionNote: "Active Code Contributions: Daily"
   },
   mentors: {
-    eyebrow: "// MENTORS & ADVISORS",
-    title: "Advised by people who've shipped before.",
+    eyebrow: "// TEAM",
+    title: "The people behind DO Company.",
     items: [
       {
         id: "men-1",
-        name: "Elena Rostova",
-        role: "VP of Infrastructure @ Distributed AI",
-        specialty: "Cloud Systems & Kubernetes",
-        image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop",
-        tag: "Cloud Architect"
-      },
-      {
-        id: "men-2",
-        name: "David Chen",
-        role: "Ex-Head of Product @ Tech Giant",
-        specialty: "Product-Led Growth & UX",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
-        tag: "Product Lead"
-      },
-      {
-        id: "men-3",
-        name: "Sophia Al-Mansoor",
-        role: "Principal Security Officer",
-        specialty: "Cybersecurity & Zero-Trust",
-        image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&auto=format&fit=crop",
-        tag: "SecOps Advisor"
-      },
-      {
-        id: "men-4",
-        name: "Liam O'Connor",
-        role: "Founding Engineer @ Scaled Unicorn",
-        specialty: "High-Throughput Databases",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop",
-        tag: "DB Performance"
+        name: "Bimal Jayakumar",
+        role: "Lead Developer @ DO Company",
+        specialty: "Full-Stack Web & Mobile Development",
+        image: "/images/mypic.jpeg",
+        tag: "Full-Stack Dev"
       }
     ]
   },
