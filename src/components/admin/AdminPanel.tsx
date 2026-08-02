@@ -1141,7 +1141,7 @@ export const AdminPanel: React.FC = () => {
                           className="flex-1 bg-black/70 border border-white/15 rounded-xl px-4 py-2.5 text-paper focus:border-primary focus:outline-none font-mono text-xs"
                         />
                         <div className="w-12 h-12 rounded-xl bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-sm shrink-0">
-                          {founderName ? founderName.charAt(0) : 'D'}
+                          {data.founder.name ? data.founder.name.charAt(0) : 'D'}
                         </div>
                       </div>
                     </div>

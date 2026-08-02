@@ -340,7 +340,7 @@ const DEFAULT_SITE_DATA: SiteData = {
       title: proj.title,
       category: proj.category,
       technologies: proj.technologies,
-      image: proj.image,
+      image: "",
       description: proj.description,
       link: "#"
     }))
