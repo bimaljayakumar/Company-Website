@@ -41,7 +41,7 @@ export const AdminPanel: React.FC = () => {
   const adminEmails = getAdminEmails();
 
   const [activeTab, setActiveTab] = useState<
-    'hero' | 'founder' | 'mentors' | 'projects' | 'services' | 'process' | 'testimonials' | 'cta' | 'messages' | 'security'
+    'hero' | 'founder' | 'mentors' | 'projects' | 'services' | 'process' | 'testimonials' | 'cta' | 'messages' | 'security' | 'cloudinary'
   >('hero');
 
   const [toastMsg, setToastMsg] = useState<string | null>(null);
@@ -509,6 +509,16 @@ export const AdminPanel: React.FC = () => {
                 {data.messages.length}
               </span>
             )}
+          </button>
+
+          <button
+            onClick={() => setActiveTab('cloudinary')}
+            className={`w-full text-left px-4 py-3.5 rounded-2xl font-mono text-xs flex items-center gap-3 transition-all cursor-pointer ${
+              activeTab === 'cloudinary' ? 'bg-primary text-ink font-bold shadow-lg shadow-primary/20' : 'text-slate hover:bg-white/5 hover:text-paper'
+            }`}
+          >
+            <Cloud className="w-4 h-4" />
+            <span>Cloudinary CDN</span>
           </button>
 
           <button
@@ -2387,6 +2397,89 @@ export const AdminPanel: React.FC = () => {
                   ))}
                 </div>
               )}
+            </div>
+          )}
+
+          {/* TAB: CLOUDINARY MEDIA CDN */}
+          {activeTab === 'cloudinary' && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="font-jakarta text-2xl font-black text-paper">Cloudinary Media CDN Configuration</h2>
+                <p className="font-sans text-xs text-slate mt-1">Configure your free Cloudinary account to stream 4K videos and high-res photos on Vercel.</p>
+              </div>
+
+              {/* CLOUDINARY MEDIA CDN SETTINGS */}
+              <div className="bg-black/60 border border-primary/40 rounded-3xl p-6 space-y-5 font-sans text-sm shadow-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/40 flex items-center justify-center text-primary">
+                      <Cloud className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="font-mono text-xs font-bold text-primary uppercase tracking-wider">// CLOUDINARY MEDIA CDN SETTINGS</h3>
+                      <p className="font-sans text-xs text-slate mt-0.5">Upload photos and 4K videos permanently to Cloudinary CDN for instant worldwide streaming on Vercel.</p>
+                    </div>
+                  </div>
+                  {getCloudinaryConfig({ cloudName: cloudinaryCloudName, uploadPreset: cloudinaryUploadPreset }).cloudName ? (
+                    <span className="font-mono text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-xl flex items-center gap-1.5 font-bold">
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>Cloudinary Active</span>
+                    </span>
+                  ) : (
+                    <span className="font-mono text-xs text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-xl font-bold">
+                      Not Configured
+                    </span>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block font-mono text-xs text-paper font-bold uppercase mb-1.5">Cloudinary Cloud Name *</label>
+                    <input
+                      type="text"
+                      value={cloudinaryCloudName}
+                      onChange={(e) => setCloudinaryCloudName(e.target.value)}
+                      placeholder="e.g. dxy123abc"
+                      className="w-full bg-black/80 border border-white/15 rounded-xl px-4 py-3 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-mono text-xs text-paper font-bold uppercase mb-1.5">Unsigned Upload Preset *</label>
+                    <input
+                      type="text"
+                      value={cloudinaryUploadPreset}
+                      onChange={(e) => setCloudinaryUploadPreset(e.target.value)}
+                      placeholder="e.g. docompany_preset"
+                      className="w-full bg-black/80 border border-white/15 rounded-xl px-4 py-3 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      updateSection('cloudinary', {
+                        cloudName: cloudinaryCloudName.trim(),
+                        uploadPreset: cloudinaryUploadPreset.trim()
+                      });
+                      showToast('Cloudinary CDN settings saved successfully!', false);
+                    }}
+                    className="px-6 py-3 rounded-xl bg-primary text-ink font-mono text-xs font-bold flex items-center gap-2 cursor-pointer hover:scale-102 transition-all shadow-lg shadow-primary/20"
+                  >
+                    <Save className="w-4 h-4" />
+                    <span>Save Cloudinary Credentials</span>
+                  </button>
+                </div>
+
+                <div className="bg-panel-light/80 p-5 rounded-2xl border border-white/15 font-mono text-xs text-slate space-y-2 leading-relaxed">
+                  <p className="font-bold text-primary">// Simple 60-Second Cloudinary Setup Guide:</p>
+                  <p>1. Sign in to your account at <a href="https://cloudinary.com" target="_blank" rel="noreferrer" className="text-primary underline">Cloudinary.com</a>.</p>
+                  <p>2. Copy your <strong className="text-paper">Cloud Name</strong> from the main dashboard & paste it into the field above.</p>
+                  <p>3. Go to Dashboard → Settings ⚙️ (bottom left) → Click <strong className="text-paper">Upload</strong> tab → Scroll down to <strong className="text-paper">Upload presets</strong> → Click <strong className="text-paper">Add upload preset</strong>.</p>
+                  <p>4. Set Signing Mode to <strong className="text-emerald-400 font-bold">Unsigned</strong> → Click Save → Copy Preset Name & paste it into the field above!</p>
+                </div>
+              </div>
             </div>
           )}
 
