@@ -19,8 +19,8 @@
       "whats": false,
       "next": true
     },
-    "videoUrl": "https://res.cloudinary.com/ufo0zltq/video/upload/v1785704549/5943-187188345_cejpdj.mp4",
-    "videoOpacity": 20,
+    "videoUrl": "no video",
+    "videoOpacity": 0,
     "description": "We design, engineer, and deploy high-performance web applications, cross-platform mobile apps, and custom site-builder infrastructure for forward-thinking enterprises.",
     "pillars": [
       "Transparent Pricing",
@@ -270,7 +270,8 @@
           "Project Reports"
         ]
       }
-    ]
+    ],
+    "videoUrl": "https://res.cloudinary.com/ufo0zltq/video/upload/v1785757094/vecteezy_cyan-and-yellow-neon-lights-wall-background-vj-loop-in-4k_56337709_qjma49.mp4"
   },
   "projects": {
     "eyebrow": "// SELECTED WORK",
