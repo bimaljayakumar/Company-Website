@@ -89,14 +89,17 @@ export const Footer: React.FC = () => {
             <a
               href="#"
               onClick={(e) => handleFooterNavClick(e, '#')}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-2.5 group max-w-full"
             >
-              <div className="w-9 h-9 rounded-xl bg-panel border border-white/15 flex items-center justify-center group-hover:border-primary/50 transition-colors shadow-lg">
-                <span className="font-jakarta text-lg font-black tracking-tighter text-paper group-hover:text-primary transition-colors">
-                  DO
+              <div className="w-9 h-9 rounded-xl bg-panel border border-white/15 flex items-center justify-center group-hover:border-primary/50 transition-colors shadow-lg shrink-0">
+                <span className="font-jakarta text-xs font-black tracking-tighter text-paper group-hover:text-primary transition-colors uppercase">
+                  {(footer.companyName || "DO Company").substring(0, 2)}
                 </span>
               </div>
-              <span className="w-2 h-2 rounded-full bg-primary" />
+              <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
+              <span className="font-jakarta text-base font-black tracking-wider text-paper uppercase truncate">
+                {footer.companyName || "DO Company"}
+              </span>
             </a>
             <p className="font-sans text-sm text-slate leading-relaxed max-w-sm">
               {footer.description}

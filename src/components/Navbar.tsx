@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { MagneticButton } from './MagneticButton';
+import { useSiteData } from '../context/DataContext';
 
 const NAV_LINKS = [
   { name: 'SERVICES', href: '#services' },
@@ -13,6 +14,8 @@ const NAV_LINKS = [
 ];
 
 export const Navbar: React.FC = () => {
+  const { data } = useSiteData();
+  const { footer } = data;
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
@@ -66,14 +69,17 @@ export const Navbar: React.FC = () => {
             <a
               href="#"
               onClick={(e) => handleNavClick(e, '#')}
-              className="flex items-center gap-2 group focus:outline-none flex-shrink-0"
+              className="flex items-center gap-2 group focus:outline-none flex-shrink-0 max-w-[150px] sm:max-w-[240px] md:max-w-none"
             >
-              <div className="w-8 h-8 rounded-full bg-black/80 border border-white/20 flex items-center justify-center group-hover:border-primary/60 transition-colors shadow-inner">
-                <span className="font-jakarta text-xs font-black tracking-tighter text-paper group-hover:text-primary transition-colors">
-                  DO
+              <div className="w-8 h-8 rounded-full bg-black/80 border border-white/20 flex items-center justify-center group-hover:border-primary/60 transition-colors shadow-inner shrink-0">
+                <span className="font-jakarta text-xs font-black tracking-tighter text-paper group-hover:text-primary transition-colors uppercase">
+                  {(footer?.companyName || "DO Company").substring(0, 2)}
                 </span>
               </div>
-              <span className="w-2 h-2 rounded-full bg-primary group-hover:scale-125 transition-transform" />
+              <span className="w-2 h-2 rounded-full bg-primary group-hover:scale-125 transition-transform shrink-0" />
+              <span className="font-jakarta text-xs sm:text-sm font-black tracking-wider text-paper uppercase truncate max-w-[90px] sm:max-w-[180px] md:max-w-[220px]">
+                {footer?.companyName || "DO Company"}
+              </span>
             </a>
 
             {/* Center: Desktop Nav Links inside the single glass bar */}

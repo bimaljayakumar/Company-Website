@@ -74,6 +74,7 @@ export const AdminPanel: React.FC = () => {
   const [founderImage, setFounderImage] = useState(data.founder.image || '');
   const [heroVideoUrl, setHeroVideoUrl] = useState(data.hero.videoUrl || '/hero-background.mp4');
   const [heroVideoOpacity, setHeroVideoOpacity] = useState(data.hero.videoOpacity ?? 20);
+  const [servicesVideoOpacity, setServicesVideoOpacity] = useState(data.services.videoOpacity ?? 25);
 
   useEffect(() => {
     if (data.founder.image !== undefined) setFounderImage(data.founder.image);
@@ -1678,15 +1679,18 @@ export const AdminPanel: React.FC = () => {
                       className="w-full bg-black/80 border border-white/15 rounded-lg px-3.5 py-2.5 text-paper focus:border-primary focus:outline-none font-bold"
                     />
                   </div>
-                  <div className="md:col-span-2 space-y-2 pt-2 border-t border-white/10">
-                    <label className="block font-mono text-[10px] text-slate font-bold uppercase">Services Background Video (URL or File Upload)</label>
+                  <div className="md:col-span-2 space-y-3 pt-3 border-t border-white/10">
+                    <div className="flex items-center justify-between">
+                      <label className="block font-mono text-[10px] text-slate font-bold uppercase">Services Background Video (URL or Path)</label>
+                      <span className="font-mono text-xs text-primary font-bold">Opacity: {servicesVideoOpacity}%</span>
+                    </div>
                     <div className="flex items-center gap-3">
                       <input
                         type="text"
                         value={data.services.videoUrl || ''}
                         onChange={(e) => updateSection('services', { videoUrl: e.target.value })}
                         placeholder="/services-background.mp4 or https://..."
-                        className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                        className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs font-bold"
                       />
                       <label className="cursor-pointer px-4 py-2 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-all font-mono text-xs font-bold shrink-0 flex items-center gap-1.5">
                         <Upload className="w-3.5 h-3.5" />
@@ -1705,6 +1709,32 @@ export const AdminPanel: React.FC = () => {
                           }}
                         />
                       </label>
+                    </div>
+
+                    {/* Services Video Opacity Slider */}
+                    <div className="space-y-2 pt-2 border-t border-white/10 font-sans text-xs">
+                      <div className="flex items-center justify-between">
+                        <label className="block font-mono text-[10px] text-slate font-bold uppercase">
+                          Services Video Opacity Level (0% - 100%)
+                        </label>
+                        <span className="font-mono text-xs text-primary font-bold">{servicesVideoOpacity}%</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="font-mono text-xs text-slate">0%</span>
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={servicesVideoOpacity}
+                          onChange={(e) => {
+                            const val = parseInt(e.target.value, 10);
+                            setServicesVideoOpacity(val);
+                            updateSection('services', { videoOpacity: val });
+                          }}
+                          className="w-full h-2 bg-black border border-white/15 rounded-lg appearance-none cursor-pointer accent-primary"
+                        />
+                        <span className="font-mono text-xs text-slate">100%</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2698,6 +2728,42 @@ export const AdminPanel: React.FC = () => {
                   <p>2. Copy your <strong className="text-paper">Cloud Name</strong> from the dashboard & paste it above.</p>
                   <p>3. Go to Cloudinary Dashboard → Settings ⚙️ → Upload → Scroll down to <strong className="text-paper">Upload presets</strong> → Click <strong className="text-paper">Add upload preset</strong>.</p>
                   <p>4. Set Signing Mode to <strong className="text-emerald-400">Unsigned</strong> → Click Save → Copy Preset Name & paste it above!</p>
+                </div>
+              </div>
+
+              {/* Global Company Name & Brand Settings */}
+              <div className="bg-black/60 border border-primary/30 rounded-3xl p-6 space-y-4 font-sans text-sm">
+                <div className="border-b border-white/10 pb-3">
+                  <h3 className="font-mono text-xs font-bold text-primary uppercase tracking-wider">// COMPANY NAME & GLOBAL BRAND IDENTITY</h3>
+                  <p className="font-sans text-xs text-slate mt-0.5">Changing the company name here automatically updates the Navbar, Footer, Page Title, Meta Tags, and Brand Badges everywhere across the site.</p>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block font-mono text-xs text-slate font-bold">Company Name</label>
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <input
+                      type="text"
+                      value={data.footer?.companyName || ''}
+                      onChange={(e) => {
+                        updateSection('footer', { companyName: e.target.value });
+                      }}
+                      placeholder="e.g. DO Company or Your Business Name"
+                      className="flex-1 bg-black/80 border border-white/15 rounded-xl px-4 py-3 text-paper focus:border-primary focus:outline-none font-bold text-sm"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        showToast('Company Name updated globally across all pages!');
+                      }}
+                      className="px-5 py-3 rounded-xl bg-primary text-ink font-mono text-xs font-bold flex items-center justify-center gap-2 cursor-pointer hover:bg-white transition-all shadow-md shadow-primary/20 shrink-0"
+                    >
+                      <Save className="w-4 h-4" />
+                      <span>Save Company Name</span>
+                    </button>
+                  </div>
+                  <p className="font-mono text-[10px] text-slate/70">
+                    Layout protects long names: text automatically scales and truncates on mobile headers without breaking layout.
+                  </p>
                 </div>
               </div>
 

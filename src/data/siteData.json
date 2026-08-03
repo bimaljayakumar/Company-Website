@@ -192,6 +192,8 @@
   "services": {
     "eyebrow": "// SERVICES",
     "title": "Engineering services built for speed, scale, and longevity.",
+    "videoUrl": "/services-background.mp4",
+    "videoOpacity": 25,
     "items": [
       {
         "id": "srv-1",

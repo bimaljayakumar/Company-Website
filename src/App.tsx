@@ -19,10 +19,25 @@ import { ContactModal } from './components/ContactModal';
 import { AdminLoginPage } from './components/admin/AdminLoginPage';
 import { AdminPanel } from './components/admin/AdminPanel';
 import { EmergencyRecoveryPage } from './components/admin/EmergencyRecoveryPage';
+import { useSiteData } from './context/DataContext';
 import './App.css';
 
 const MainPortfolio: React.FC = () => {
   const [contactOpen, setContactOpen] = useState(false);
+  const { data } = useSiteData();
+
+  React.useEffect(() => {
+    const compName = data.footer?.companyName || "DO Company";
+    document.title = `${compName} | Software & Web Development Studio`;
+
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.setAttribute('name', 'description');
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute('content', `${compName} - ${data.footer?.description || "High-performance software engineering agency specializing in custom web applications, cross-platform mobile apps, and enterprise site-builder tools."}`);
+  }, [data.footer?.companyName, data.footer?.description]);
 
   return (
     <main className="min-h-screen bg-ink text-paper selection:bg-primary selection:text-ink relative">

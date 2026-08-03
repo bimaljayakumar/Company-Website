@@ -69,6 +69,7 @@ export interface ServicesData {
   eyebrow: string;
   title: string;
   videoUrl?: string;
+  videoOpacity?: number;
   items: ServiceItem[];
 }
 

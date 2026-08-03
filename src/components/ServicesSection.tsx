@@ -18,7 +18,8 @@ export const ServicesSection: React.FC = () => {
           muted
           playsInline
           key={services.videoUrl || 'services-bg-video'}
-          className="w-full h-full object-cover opacity-35 mix-blend-screen"
+          className="w-full h-full object-cover mix-blend-screen"
+          style={{ opacity: `${(services.videoOpacity ?? 25) / 100}` }}
         >
           <source src={services.videoUrl || "/services-background.mp4"} type="video/mp4" />
         </video>
