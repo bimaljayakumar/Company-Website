@@ -663,8 +663,8 @@ export const AdminPanel: React.FC = () => {
                 <div className="p-5 rounded-2xl bg-black/60 border border-primary/30 space-y-4">
                   <div className="flex items-center justify-between border-b border-white/10 pb-3">
                     <div>
-                      <h4 className="font-mono text-xs font-bold text-primary uppercase tracking-wider">// HERO BACKGROUND VIDEO & OPACITY</h4>
-                      <p className="font-sans text-xs text-slate mt-0.5">Upload a background video or enter video URL, and adjust opacity from 0% to 100%.</p>
+                      <h4 className="font-mono text-xs font-bold text-primary uppercase tracking-wider">// HERO BACKGROUND VIDEO URL & OPACITY</h4>
+                      <p className="font-sans text-xs text-slate mt-0.5">Enter video URL or path (e.g. /hero-background.mp4), and adjust opacity from 0% to 100%.</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-xs text-paper font-bold px-3 py-1 rounded-lg bg-panel border border-white/15">
@@ -673,45 +673,19 @@ export const AdminPanel: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Video File Upload */}
-                    <div className="space-y-2 font-sans text-xs">
-                      <label className="block font-mono text-[10px] text-slate font-bold uppercase">Upload Video File</label>
-                      <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-all font-mono text-xs font-bold w-full justify-center">
-                        <Upload className="w-4 h-4" />
-                        <span>Upload Video File...</span>
-                        <input
-                          type="file"
-                          accept="video/*"
-                          className="hidden"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                              handleFileUpload(file, (url) => {
-                                setHeroVideoUrl(url);
-                                updateSection('hero', { videoUrl: url });
-                              }, 'Hero Background Video loaded!');
-                            }
-                          }}
-                        />
-                      </label>
-                    </div>
-
-                    {/* Video URL or Path */}
-                    <div className="font-sans text-xs">
-                      <label className="block font-mono text-[10px] text-slate font-bold uppercase mb-1">Or Edit Video URL / Path</label>
-                      <input
-                        type="text"
-                        name="videoUrl"
-                        value={heroVideoUrl}
-                        onChange={(e) => {
-                          setHeroVideoUrl(e.target.value);
-                          updateSection('hero', { videoUrl: e.target.value });
-                        }}
-                        placeholder="https://... or /hero-background.mp4"
-                        className="w-full bg-black/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-paper focus:border-primary focus:outline-none font-mono text-xs"
-                      />
-                    </div>
+                  <div className="font-sans text-xs">
+                    <label className="block font-mono text-[10px] text-slate font-bold uppercase mb-1">Background Video URL / Path</label>
+                    <input
+                      type="text"
+                      name="videoUrl"
+                      value={heroVideoUrl}
+                      onChange={(e) => {
+                        setHeroVideoUrl(e.target.value);
+                        updateSection('hero', { videoUrl: e.target.value });
+                      }}
+                      placeholder="https://... or /hero-background.mp4"
+                      className="w-full bg-black/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-paper focus:border-primary focus:outline-none font-mono text-xs font-bold"
+                    />
                   </div>
 
                   {/* Opacity Slider */}
