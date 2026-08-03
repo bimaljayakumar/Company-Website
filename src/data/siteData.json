@@ -11,15 +11,15 @@
     "headlineWord4": "NEXT.",
     "glowingTarget": "NEXT",
     "glowingWords": {
-      "word1": false,
+      "word1": true,
       "word2": false,
-      "word3": false,
+      "word3": true,
       "word4": true,
-      "build": false,
-      "whats": false,
+      "build": true,
+      "whats": true,
       "next": true
     },
-    "videoUrl": "/hero-background.mp4",
+    "videoUrl": "p4",
     "videoOpacity": 20,
     "description": "We design, engineer, and deploy high-performance web applications, cross-platform mobile apps, and custom site-builder infrastructure for forward-thinking enterprises.",
     "pillars": [
@@ -34,16 +34,16 @@
     "note": "No commitment needed — just a conversation.",
     "metrics": [
       {
-        "label": "Shipped Products",
-        "value": "40+"
+        "value": "40+",
+        "label": "Shipped Products"
       },
       {
-        "label": "Retention Rate",
-        "value": "98%"
+        "value": "98%",
+        "label": "Retention Rate"
       },
       {
-        "label": "Avg. Launch",
-        "value": "6 Wk"
+        "value": "6 Wk",
+        "label": "Avg. Launch"
       }
     ]
   },
