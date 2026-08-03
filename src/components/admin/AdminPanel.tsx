@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Layout, User, Briefcase, Wrench, Layers, MessageSquare, Shield, ExternalLink,
   LogOut, Save, Plus, Trash2, CheckCircle, CheckCircle2, RefreshCw, Download, Upload, Eye, EyeOff, ShieldAlert, ShieldCheck,
-  Cloud
+  Cloud, Rocket
 } from 'lucide-react';
 import { useSiteData } from '../../context/DataContext';
 import { useAdminAuth } from '../../context/AdminAuthContext';
@@ -22,7 +22,8 @@ export const AdminPanel: React.FC = () => {
     setAsPermanentDefaults,
     resetToFactoryDefaults,
     hasPermanentDefaults,
-    importDataJSON
+    importDataJSON,
+    deployToLive
   } = useSiteData();
 
   const {
@@ -46,6 +47,22 @@ export const AdminPanel: React.FC = () => {
 
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [jsonInput, setJsonInput] = useState('');
+  const [isDeploying, setIsDeploying] = useState(false);
+
+  const handleDeployToLive = async () => {
+    const confirmed = window.confirm("Deploy all saved changes to the live site for all users?");
+    if (!confirmed) return;
+
+    setIsDeploying(true);
+    const success = await deployToLive();
+    setIsDeploying(false);
+
+    if (success) {
+      showToast('Deployed! Live for all users in ~2-3 minutes.', false);
+    } else {
+      showToast('Deploy failed. Check VITE_GITHUB_TOKEN in Vercel environment variables.', false);
+    }
+  };
 
   // Media & Cloudinary Upload State
   const [isUploadingMedia, setIsUploadingMedia] = useState(false);
@@ -197,11 +214,11 @@ export const AdminPanel: React.FC = () => {
     }
   };
 
-  const handleSaveHero = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSaveHero = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const opacityVal = parseInt(formData.get('videoOpacity') as string, 10);
-    updateSection('hero', {
+    await updateSection('hero', {
       eyebrow: formData.get('eyebrow') as string,
       headlineWord1: formData.get('headlineWord1') as string,
       headlineWord2: formData.get('headlineWord2') as string,
@@ -237,7 +254,7 @@ export const AdminPanel: React.FC = () => {
       ],
     });
     addAuditLog('UPDATE_HERO', 'Hero section content, pillars & metrics updated.');
-    showToast('Hero Section updated successfully!');
+    showToast('Hero Section updated & saved permanently to disk!');
   };
 
   const handleSaveAbout = (e: React.FormEvent<HTMLFormElement>) => {
@@ -336,10 +353,10 @@ export const AdminPanel: React.FC = () => {
     showToast('Site data backup JSON downloaded.');
   };
 
-  const handleImportData = (e: React.FormEvent) => {
+  const handleImportData = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (importDataJSON(jsonInput)) {
-      showToast('Site data imported successfully!');
+    if (await importDataJSON(jsonInput)) {
+      showToast('Site data imported & saved to disk successfully!');
       setJsonInput('');
     } else {
       showToast('Import failed. Invalid JSON format.');
@@ -389,6 +406,15 @@ export const AdminPanel: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <button
+            onClick={handleDeployToLive}
+            disabled={isDeploying}
+            className="px-4 py-2 rounded-xl bg-primary text-ink font-jakarta font-extrabold hover:bg-white hover:shadow-lg hover:shadow-primary/40 transition-all font-mono text-xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            title="Deploy all saved changes to GitHub and trigger Vercel auto-redeploy"
+          >
+            <Rocket className={`w-4 h-4 ${isDeploying ? 'animate-spin' : ''}`} />
+            <span>{isDeploying ? 'Deploying...' : 'Deploy to Live 🚀'}</span>
+          </button>
           <button
             onClick={() => navigate('/')}
             className="px-4 py-2 rounded-xl bg-black/70 border border-white/15 text-slate hover:text-paper hover:border-primary transition-all font-mono text-xs flex items-center gap-2 cursor-pointer"
