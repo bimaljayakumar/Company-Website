@@ -440,6 +440,21 @@ export const AdminPanel: React.FC = () => {
         
         {/* Navigation Sidebar */}
         <aside className="w-full md:w-72 lg:w-80 bg-panel/80 border border-white/15 rounded-3xl p-4 flex flex-row md:flex-col gap-1.5 overflow-x-auto select-none backdrop-blur-xl shrink-0 h-fit">
+          
+          {/* Prominent Deploy to Live Action Button */}
+          <div className="p-3 rounded-2xl bg-primary/10 border border-primary/40 space-y-2 mb-2">
+            <button
+              onClick={handleDeployToLive}
+              disabled={isDeploying}
+              className="w-full text-center px-4 py-3 rounded-xl bg-primary text-ink font-jakarta font-black text-xs uppercase tracking-wider hover:bg-white hover:shadow-xl hover:shadow-primary/40 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            >
+              <Rocket className={`w-4 h-4 ${isDeploying ? 'animate-spin' : ''}`} />
+              <span>{isDeploying ? 'Deploying...' : 'Deploy Changes to Live 🚀'}</span>
+            </button>
+            <p className="text-[10px] font-mono text-slate text-center leading-tight">
+              Publishes all saved changes to GitHub & Vercel
+            </p>
+          </div>
           <button
             onClick={() => setActiveTab('hero')}
             className={`w-full text-left px-4 py-3.5 rounded-2xl font-mono text-xs flex items-center gap-3 transition-all cursor-pointer ${
