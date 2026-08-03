@@ -56,7 +56,7 @@ export const CTABanner: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3 text-slate text-sm font-mono">
                   <Phone className="w-4 h-4 text-primary" />
-                  <span>{cta.phone || footer.phone || "+1 (800) 450-BUILD"}</span>
+                  <span>{cta.phone || (footer as any).phone || "+1 (800) 450-BUILD"}</span>
                 </div>
                 <div className="flex items-center gap-3 text-slate text-sm font-mono">
                   <MapPin className="w-4 h-4 text-primary" />

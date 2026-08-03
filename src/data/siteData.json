@@ -1,0 +1,516 @@
+{
+  "cloudinary": {
+    "cloudName": "",
+    "uploadPreset": ""
+  },
+  "hero": {
+    "eyebrow": "We Build. We Launch. We Educate.",
+    "headlineWord1": "BUILD",
+    "headlineWord2": "",
+    "headlineWord3": "WHAT'S",
+    "headlineWord4": "NEXT.",
+    "glowingTarget": "NEXT",
+    "glowingWords": {
+      "word1": false,
+      "word2": false,
+      "word3": false,
+      "word4": true,
+      "build": false,
+      "whats": false,
+      "next": true
+    },
+    "videoUrl": "/hero-background.mp4",
+    "videoOpacity": 20,
+    "description": "We design, engineer, and deploy high-performance web applications, cross-platform mobile apps, and custom site-builder infrastructure for forward-thinking enterprises.",
+    "pillars": [
+      "Transparent Pricing",
+      "Agile & Adaptive",
+      "Products That Last"
+    ],
+    "primaryCtaText": "Get Started",
+    "primaryCtaLink": "#contact",
+    "secondaryCtaText": "See Our Work",
+    "secondaryCtaLink": "#work",
+    "note": "No commitment needed — just a conversation.",
+    "metrics": [
+      {
+        "label": "Shipped Products",
+        "value": "40+"
+      },
+      {
+        "label": "Retention Rate",
+        "value": "98%"
+      },
+      {
+        "label": "Avg. Launch",
+        "value": "6 Wk"
+      }
+    ]
+  },
+  "about": {
+    "eyebrow": "// CAPABILITIES & EXPERIENCE",
+    "title": "About the Company",
+    "description": "DO Company is a software development studio that builds websites, web applications, and mobile apps for clients across industries. We partner with startups and established businesses to turn ideas into polished, production-ready digital products — fast, reliable, and built to scale.",
+    "stats": [
+      {
+        "id": "stat-1",
+        "tag": "// TOTAL DELIVERED",
+        "value": "40+",
+        "targetNum": 40,
+        "suffix": "+",
+        "description": "High-impact web apps, platforms & site-builder engines shipped worldwide."
+      },
+      {
+        "id": "stat-2",
+        "tag": "// CLIENT SATISFACTION",
+        "value": "98%",
+        "targetNum": 98,
+        "suffix": "%",
+        "description": "Long-term partners who rely on DO Company for enterprise engineering."
+      },
+      {
+        "id": "stat-3",
+        "tag": "// SPEED TO MARKET",
+        "value": "6 Wk",
+        "targetNum": 6,
+        "suffix": " Wk",
+        "description": "Average timeframe from specs sign-off to live production deployment."
+      }
+    ],
+    "experiences": [
+      {
+        "id": "exp-1",
+        "position": "Website Builder Tools",
+        "company": "DO Company",
+        "period": "2025 - Present",
+        "location": "Worldwide",
+        "description": "Developing no-code and low-code website builder platforms that empower clients to launch and manage their own sites without technical overhead.",
+        "responsibilities": [
+          "Building drag-and-drop website builder interfaces",
+          "Creating reusable component libraries for rapid deployment",
+          "Integrating CMS and hosting solutions",
+          "Providing white-label builder tools for agencies"
+        ],
+        "technologies": [
+          "React",
+          "Next.js",
+          "Node.js",
+          "CMS",
+          "Low-Code",
+          "White-Label"
+        ]
+      },
+      {
+        "id": "exp-2",
+        "position": "Mobile App Development",
+        "company": "DO Company",
+        "period": "2024",
+        "location": "Worldwide",
+        "description": "Delivering cross-platform mobile applications for iOS and Android. From MVP to full product, we handle design, development, and deployment.",
+        "responsibilities": [
+          "Building cross-platform apps with React Native",
+          "Integrating REST APIs and real-time backends",
+          "Handling App Store and Play Store submissions",
+          "Providing post-launch maintenance and updates"
+        ],
+        "technologies": [
+          "React Native",
+          "Expo",
+          "Firebase",
+          "TypeScript",
+          "REST APIs",
+          "Push Notifications"
+        ]
+      },
+      {
+        "id": "exp-3",
+        "position": "Web App Development",
+        "company": "DO Company",
+        "period": "2023",
+        "location": "Worldwide",
+        "description": "Building full-stack web applications from frontend to backend. Scalable architectures, clean UIs, and robust APIs for SaaS products and client platforms.",
+        "responsibilities": [
+          "Developing full-stack applications with React and Node.js",
+          "Designing and building RESTful and GraphQL APIs",
+          "Setting up CI/CD pipelines and cloud deployments",
+          "Optimizing performance and security"
+        ],
+        "technologies": [
+          "React",
+          "Node.js",
+          "MongoDB",
+          "PostgreSQL",
+          "Docker",
+          "AWS"
+        ]
+      },
+      {
+        "id": "exp-4",
+        "position": "Web Design & Development",
+        "company": "DO Company",
+        "period": "2022",
+        "location": "Worldwide",
+        "description": "Crafting high-quality marketing websites and landing pages for businesses. Pixel-perfect design implementation with a focus on performance and conversion.",
+        "responsibilities": [
+          "Building responsive marketing sites and landing pages",
+          "Implementing animations and interactive UI elements",
+          "Optimizing for SEO and Core Web Vitals",
+          "Collaborating with designers on Figma-to-code workflows"
+        ],
+        "technologies": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "TypeScript",
+          "Next.js",
+          "Figma"
+        ]
+      },
+      {
+        "id": "exp-5",
+        "position": "Product Strategy",
+        "company": "DO Company",
+        "period": "2021",
+        "location": "Worldwide",
+        "description": "Helping clients define their product roadmap, technical architecture, and go-to-market strategy before a single line of code is written.",
+        "responsibilities": [
+          "Conducting discovery workshops with clients",
+          "Defining MVP scope and feature prioritization",
+          "Creating technical architecture documents",
+          "Advising on technology stack selection"
+        ],
+        "technologies": [
+          "Discovery",
+          "Roadmapping",
+          "Architecture",
+          "MVP Planning",
+          "Consulting"
+        ]
+      }
+    ]
+  },
+  "services": {
+    "eyebrow": "// SERVICES",
+    "title": "Engineering services built for speed, scale, and longevity.",
+    "items": [
+      {
+        "id": "srv-1",
+        "title": "Website Development",
+        "description": "Custom websites and web apps",
+        "details": "High-performance, responsive web applications built with modern frontend & backend frameworks.",
+        "tools": [
+          "React",
+          "Next.js",
+          "TypeScript",
+          "Node.js",
+          "Tailwind CSS"
+        ]
+      },
+      {
+        "id": "srv-2",
+        "title": "Mobile App Development",
+        "description": "iOS & Android apps with React Native",
+        "details": "Cross-platform mobile application development for iOS and Android with native performance.",
+        "tools": [
+          "React Native",
+          "Expo",
+          "iOS",
+          "Android",
+          "Mobile Architecture"
+        ]
+      },
+      {
+        "id": "srv-3",
+        "title": "College & Academic Projects",
+        "description": "Final year projects, documentation, academic software",
+        "details": "End-to-end academic project engineering, complete code implementations, and project reports.",
+        "tools": [
+          "Python",
+          "Java",
+          "MERN Stack",
+          "Academic Docs",
+          "SRS & SDD"
+        ]
+      },
+      {
+        "id": "srv-4",
+        "title": "Industry-Level Projects",
+        "description": "Dashboards, portals, SaaS tools for businesses",
+        "details": "Scalable enterprise dashboards, business automation portals, and full-stack SaaS tools.",
+        "tools": [
+          "Enterprise SaaS",
+          "Dashboards",
+          "REST APIs",
+          "Cloud & DB",
+          "Security"
+        ]
+      },
+      {
+        "id": "srv-5",
+        "title": "UI/UX Design",
+        "description": "Figma design, wireframing, prototyping",
+        "details": "Modern UI/UX design systems, interactive prototypes, user flows, and Figma design kits.",
+        "tools": [
+          "Figma",
+          "Wireframing",
+          "Prototyping",
+          "Design Systems",
+          "User Research"
+        ]
+      },
+      {
+        "id": "srv-6",
+        "title": "Documentation & Reports",
+        "description": "Technical reports, SRS & SDD docs, college submissions",
+        "details": "Comprehensive technical documentation, architecture blueprints, SRS/SDD reports, and presentation slides.",
+        "tools": [
+          "SRS & SDD",
+          "Technical Writing",
+          "Architecture Specs",
+          "Project Reports"
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "eyebrow": "// SELECTED WORK",
+    "title": "Recent projects we've designed, engineered, and shipped.",
+    "items": [
+      {
+        "id": "proj-1",
+        "title": "SaaS Dashboard",
+        "category": "Web App",
+        "technologies": "React, Node.js, PostgreSQL, TypeScript, Docker, AWS",
+        "image": "/images/project-1.webp",
+        "description": "A full-featured SaaS analytics dashboard with real-time data visualization, role-based access control, and a multi-tenant architecture built for scale.",
+        "link": "#"
+      },
+      {
+        "id": "proj-2",
+        "title": "E-Commerce Platform",
+        "category": "Full Stack",
+        "technologies": "Next.js, Node.js, MongoDB, Stripe, TailwindCSS",
+        "image": "/images/project-2.webp",
+        "description": "A performant e-commerce storefront with product catalog, cart, secure checkout, order management, and an admin dashboard for inventory control.",
+        "link": "#"
+      },
+      {
+        "id": "proj-3",
+        "title": "Mobile Banking App",
+        "category": "Mobile App",
+        "technologies": "React Native, Expo, Firebase, TypeScript, REST APIs",
+        "image": "/images/project-3.webp",
+        "description": "A cross-platform mobile banking application with biometric authentication, real-time transaction tracking, and push notification support for iOS and Android.",
+        "link": "#"
+      },
+      {
+        "id": "proj-4",
+        "title": "Website Builder",
+        "category": "Builder Tool",
+        "technologies": "React, Next.js, Node.js, MongoDB, TailwindCSS",
+        "image": "/images/project-4.webp",
+        "description": "A drag-and-drop website builder platform enabling non-technical users to create, customize, and publish professional websites without writing code.",
+        "link": "#"
+      },
+      {
+        "id": "proj-5",
+        "title": "Corporate Marketing Site",
+        "category": "Web Design",
+        "technologies": "Next.js, TypeScript, GSAP, TailwindCSS, Vercel",
+        "image": "/images/project-5.webp",
+        "description": "A high-performance corporate marketing website with scroll-driven animations, optimized Core Web Vitals, and a headless CMS integration for easy content updates.",
+        "link": "#"
+      },
+      {
+        "id": "proj-6",
+        "title": "Project Management Tool",
+        "category": "Web App",
+        "technologies": "React, Node.js, Socket.io, PostgreSQL, Docker",
+        "image": "/images/placeholder.webp",
+        "description": "A real-time project management platform with kanban boards, team collaboration features, file attachments, and live activity feeds powered by WebSockets.",
+        "link": "#"
+      },
+      {
+        "id": "proj-7",
+        "title": "Healthcare Portal",
+        "category": "Full Stack",
+        "technologies": "Next.js, Node.js, PostgreSQL, TypeScript, AWS",
+        "image": "/images/placeholder.webp",
+        "description": "A secure patient and provider portal with appointment scheduling, medical record management, and HIPAA-compliant data handling built on AWS infrastructure.",
+        "link": "#"
+      },
+      {
+        "id": "proj-8",
+        "title": "Startup Landing Page",
+        "category": "Web Design",
+        "technologies": "Next.js, GSAP, TailwindCSS, Figma, Vercel",
+        "image": "/images/placeholder.webp",
+        "description": "A conversion-focused startup landing page with animated hero sections, feature showcases, pricing tables, and integrated lead capture forms.",
+        "link": "#"
+      }
+    ]
+  },
+  "process": {
+    "eyebrow": "// PROCESS",
+    "title": "How we turn ideas into production-ready software.",
+    "steps": [
+      {
+        "id": "proc-1",
+        "number": "01",
+        "title": "Discovery & Architecture",
+        "description": "We map out scope, technology stack, and high-level system architecture before writing a line of code."
+      },
+      {
+        "id": "proc-2",
+        "number": "02",
+        "title": "Design & Component Systems",
+        "description": "Pixel-perfect UI design, accessible component libraries, and rapid interactive prototypes."
+      },
+      {
+        "id": "proc-3",
+        "number": "03",
+        "title": "Agile Development",
+        "description": "Sprint-based delivery with weekly demos, test-driven development, and clean TypeScript/React code."
+      },
+      {
+        "id": "proc-4",
+        "number": "04",
+        "title": "Deployment & Optimization",
+        "description": "CI/CD setup, performance tuning, Core Web Vitals optimization, and production deployment."
+      }
+    ]
+  },
+  "founder": {
+    "eyebrow": "// FOUNDER",
+    "headline": "Led by someone who still writes code.",
+    "name": "Jayadev",
+    "role": "CEO & Lead Architect",
+    "tagline": "Building Scalable Digital Products",
+    "quote": "We don't just build software — we build solutions that scale, perform, and last. Every line of code at DO Company is written with purpose and precision.",
+    "bio": "Jayadev founded DO Company with a clear mission: deliver high-quality, production-ready software to businesses and startups worldwide — fast, reliable, and built to scale.",
+    "image": "",
+    "github": "https://github.com/bimaljayakumar",
+    "linkedin": "https://linkedin.com/in/bimaljayakumar",
+    "twitter": "https://twitter.com",
+    "contributionNote": "Active Code Contributions: Daily"
+  },
+  "mentors": {
+    "eyebrow": "// TEAM",
+    "title": "The people behind DO Company.",
+    "items": [
+      {
+        "id": "men-1",
+        "name": "Bimal Jayakumar",
+        "role": "Lead Developer @ DO Company",
+        "specialty": "Full-Stack Web & Mobile Development",
+        "image": "",
+        "tag": "Full-Stack Dev"
+      }
+    ]
+  },
+  "testimonials": {
+    "eyebrow": "// TESTIMONIALS",
+    "title": "What founders and technical leaders say.",
+    "items": [
+      {
+        "id": "test-1",
+        "quote": "DO Company delivered our SaaS platform ahead of schedule with flawless architecture. Their attention to performance and code quality is unmatched.",
+        "author": "Sarah Jenkins",
+        "role": "CTO",
+        "company": "FlowState Technologies",
+        "image": ""
+      },
+      {
+        "id": "test-2",
+        "quote": "Working with Marcus and team felt like having a senior engineering lead in-house. They guided our tech stack decisions and launched our MVP seamlessly.",
+        "author": "Michael Chang",
+        "role": "Founder",
+        "company": "Apex Analytics",
+        "image": ""
+      }
+    ]
+  },
+  "toolkit": {
+    "eyebrow": "// OUR TOOLKIT",
+    "title": "Engineered with modern, battle-tested technologies."
+  },
+  "cta": {
+    "eyebrow": "// WHAT'S NEXT",
+    "title": "WHAT'S NEXT?",
+    "subtitle": "Let's discuss your product roadmap, technical architecture, or build requirements.",
+    "email": "hello@docompany.dev",
+    "phone": "+1 (800) 450-BUILD",
+    "buttonText": "Schedule Consultation"
+  },
+  "footer": {
+    "companyName": "DO Company",
+    "description": "High-performance software engineering agency specializing in custom web applications, cross-platform mobile apps, and enterprise site-builder tools.",
+    "addressLine1": "548 Market Street, Suite 900",
+    "addressLine2": "San Francisco, CA 94104",
+    "email": "build@docompany.dev",
+    "copyrightText": "© 2026 DO Company Inc. All rights reserved.",
+    "github": "https://github.com",
+    "linkedin": "https://linkedin.com",
+    "twitter": "https://twitter.com",
+    "navLinks": [
+      {
+        "id": "nav-1",
+        "label": "Services",
+        "href": "#services"
+      },
+      {
+        "id": "nav-2",
+        "label": "Selected Work",
+        "href": "#work"
+      },
+      {
+        "id": "nav-3",
+        "label": "Engineering Process",
+        "href": "#process"
+      },
+      {
+        "id": "nav-4",
+        "label": "Leadership",
+        "href": "#founder"
+      },
+      {
+        "id": "nav-5",
+        "label": "Advisors",
+        "href": "#mentors"
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "cap-1",
+        "label": "Full-Stack Web Dev"
+      },
+      {
+        "id": "cap-2",
+        "label": "React Native Apps"
+      },
+      {
+        "id": "cap-3",
+        "label": "No-Code Builder Tools"
+      },
+      {
+        "id": "cap-4",
+        "label": "Microservice Architecture"
+      },
+      {
+        "id": "cap-5",
+        "label": "Performance Auditing"
+      }
+    ]
+  },
+  "messages": [
+    {
+      "id": "msg-1",
+      "name": "Alex Rivera",
+      "email": "alex@fintechstartup.com",
+      "subject": "Web App Architecture Inquiry",
+      "message": "Hi team, we're looking to build a multi-tenant financial dashboard using React and Node.js. Would love to schedule a discovery call.",
+      "date": "2026-07-28 10:15 AM",
+      "read": false
+    }
+  ]
+}
