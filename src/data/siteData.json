@@ -287,6 +287,26 @@
         "description": "A full-stack women’s safety platform built with Django, featuring emergency SOS, incident reporting, location-based safety services, community features.",
         "link": "https://github.com/bimaljayakumar/Zafe-Web-Django",
         "year": "2026"
+      },
+      {
+        "id": "item-1786131596677",
+        "title": "Health Management",
+        "category": "Web App",
+        "technologies": "Python, Django, Django REST Framework, HTML5, CSS3",
+        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786132324/ChatGPT_Image_Aug_8_2026_01_21_45_AM_ygmcof.png",
+        "description": "The system streamlines appointment scheduling, digital prescriptions, medical records, pharmacy management, laboratory services.",
+        "link": "https://github.com/bimaljayakumar/CarePoint-Health-Management-System",
+        "year": "2026"
+      },
+      {
+        "id": "item-1786132351515",
+        "title": "Job Portal Platform",
+        "category": "Web App",
+        "technologies": "Python, Django, Django REST Framework, HTML5, CSS3",
+        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786132814/ChatGPT_Image_Aug_8_2026_01_29_56_AM_m5f6gz.png",
+        "description": "A modern full-stack recruitment platform built with Django, connecting job seekers and recruiters through intelligent job discovery.",
+        "link": "https://github.com/bimaljayakumar/SkillMint-JobPortal-Django",
+        "year": "2026"
       }
     ]
   },
@@ -437,5 +457,5 @@
     ]
   },
   "messages": [],
-  "version": 1786131165393
+  "version": 1786132841266
 }
