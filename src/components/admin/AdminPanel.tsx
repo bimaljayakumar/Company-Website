@@ -41,9 +41,33 @@ export const AdminPanel: React.FC = () => {
 
   const adminEmails = getAdminEmails();
 
-  const [activeTab, setActiveTab] = useState<
-    'hero' | 'founder' | 'mentors' | 'projects' | 'services' | 'process' | 'testimonials' | 'cta' | 'messages' | 'security' | 'cloudinary'
-  >('hero');
+  type AdminTab =
+    | 'hero'
+    | 'founder'
+    | 'mentors'
+    | 'projects'
+    | 'services'
+    | 'process'
+    | 'testimonials'
+    | 'cta'
+    | 'messages'
+    | 'security'
+    | 'cloudinary';
+
+  const [activeTab, setActiveTabState] = useState<AdminTab>(() => {
+    try {
+      const saved = sessionStorage.getItem('admin_active_tab');
+      if (saved) return saved as AdminTab;
+    } catch (e) {}
+    return 'hero';
+  });
+
+  const setActiveTab = (tab: AdminTab) => {
+    setActiveTabState(tab);
+    try {
+      sessionStorage.setItem('admin_active_tab', tab);
+    } catch (e) {}
+  };
 
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [jsonInput, setJsonInput] = useState('');
