@@ -230,13 +230,9 @@ const getBaselineDefaults = (): SiteData => {
     const savedVersion = localStorage.getItem(VERSION_KEY);
     const builtInVersion = String(DEFAULT_SITE_DATA.version || '');
 
-    // If built-in deployed siteData.json has a newer/different version than cached locally,
-    // invalidate stale cache so all devices pick up the latest live content.
     if (builtInVersion && savedVersion !== builtInVersion) {
       localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(PERMANENT_DEFAULT_KEY);
       localStorage.setItem(VERSION_KEY, builtInVersion);
-      return DEFAULT_SITE_DATA;
     }
 
     const customDefault = localStorage.getItem(PERMANENT_DEFAULT_KEY);
@@ -479,6 +475,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const setAsPermanentDefaults = async (): Promise<boolean> => {
     setHasPermanentDefaults(true);
+    try {
+      localStorage.setItem(PERMANENT_DEFAULT_KEY, JSON.stringify(data));
+    } catch (e) {}
     return await saveDataLocally(data);
   };
 
@@ -513,10 +512,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const nextVersion = Date.now();
     const updatedState = { ...data, version: nextVersion };
     setData(updatedState);
-    await saveDataLocally(updatedState);
     try {
+      localStorage.setItem(PERMANENT_DEFAULT_KEY, JSON.stringify(updatedState));
       localStorage.setItem(VERSION_KEY, String(nextVersion));
     } catch (e) {}
+    await saveDataLocally(updatedState);
     return await commitToGitHubLive(updatedState);
   };
 
