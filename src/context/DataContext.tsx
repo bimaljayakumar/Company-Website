@@ -104,18 +104,18 @@ export interface ProcessData {
 }
 
 export interface FounderData {
-  eyebrow: string;
-  headline: string;
-  name: string;
-  role: string;
-  tagline: string;
-  quote: string;
-  bio: string;
-  image: string;
-  github: string;
-  linkedin: string;
-  twitter: string;
-  contributionNote: string;
+  eyebrow?: string;
+  headline?: string;
+  name?: string;
+  role?: string;
+  tagline?: string;
+  quote?: string;
+  bio?: string;
+  image?: string;
+  github?: string | null;
+  linkedin?: string | null;
+  twitter?: string | null;
+  contributionNote?: string;
 }
 
 export interface MentorItem {
@@ -169,17 +169,17 @@ export interface FooterCapability {
 }
 
 export interface FooterData {
-  companyName: string;
-  description: string;
-  addressLine1: string;
-  addressLine2: string;
-  email: string;
-  copyrightText: string;
-  github: string;
-  linkedin: string;
-  twitter: string;
-  navLinks: FooterNavLink[];
-  capabilities: FooterCapability[];
+  companyName?: string;
+  description?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  email?: string;
+  copyrightText?: string;
+  github?: string | null;
+  linkedin?: string | null;
+  twitter?: string | null;
+  navLinks?: FooterNavLink[];
+  capabilities?: FooterCapability[];
 }
 
 export interface MessageItem {
@@ -219,7 +219,7 @@ export interface SiteData {
   cloudinary?: CloudinaryConfigData;
 }
 
-const DEFAULT_SITE_DATA: SiteData = initialSiteData as SiteData;
+const DEFAULT_SITE_DATA: SiteData = initialSiteData as unknown as SiteData;
 
 const STORAGE_KEY = "docompany_portfolio_site_data_v1";
 const PERMANENT_DEFAULT_KEY = "docompany_permanent_default_data_v1";
