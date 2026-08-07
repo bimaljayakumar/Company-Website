@@ -112,9 +112,9 @@ export interface FounderData {
   quote?: string;
   bio?: string;
   image?: string;
-  github?: string | null;
-  linkedin?: string | null;
-  twitter?: string | null;
+  github?: string;
+  linkedin?: string;
+  twitter?: string;
   contributionNote?: string;
 }
 
@@ -175,9 +175,9 @@ export interface FooterData {
   addressLine2?: string;
   email?: string;
   copyrightText?: string;
-  github?: string | null;
-  linkedin?: string | null;
-  twitter?: string | null;
+  github?: string;
+  linkedin?: string;
+  twitter?: string;
   navLinks?: FooterNavLink[];
   capabilities?: FooterCapability[];
 }
