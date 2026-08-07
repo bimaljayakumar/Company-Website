@@ -307,6 +307,16 @@
         "description": "A modern full-stack recruitment platform built with Django, connecting job seekers and recruiters through intelligent job discovery.",
         "link": "https://github.com/bimaljayakumar/SkillMint-JobPortal-Django",
         "year": "2026"
+      },
+      {
+        "id": "item-1786136319657",
+        "title": "Personal Portfolio",
+        "category": "Web App",
+        "technologies": "Next.js 16, TypeScript, Tailwind CSS, Framer Motion, Three.js",
+        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786136453/file_00000000fb5c82118d3ad8e4bece1400_a7zwgl.png",
+        "description": "A cinematic, interactive developer portfolio built with Next.js, featuring a scroll-driven hero, immersive animations.",
+        "link": "https://bimaljayakumar.vercel.app/",
+        "year": "2026"
       }
     ]
   },
@@ -457,5 +467,5 @@
     ]
   },
   "messages": [],
-  "version": 1786133078026
+  "version": 1786136526522
 }
