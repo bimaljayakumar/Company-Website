@@ -55,15 +55,15 @@
       {
         "id": "stat-1",
         "tag": "// TOTAL DELIVERED",
-        "value": "20+",
-        "targetNum": 40,
+        "value": "0+",
+        "targetNum": 30,
         "suffix": "+",
         "description": "High-impact web apps, platforms & site-builder engines shipped worldwide."
       },
       {
         "id": "stat-2",
         "tag": "// CLIENT SATISFACTION",
-        "value": "98%",
+        "value": "0%",
         "targetNum": 100,
         "suffix": "%",
         "description": "Long-term partners who rely on DO Company for enterprise engineering."
@@ -71,8 +71,8 @@
       {
         "id": "stat-3",
         "tag": "// CODE QUALITY",
-        "value": "99%",
-        "targetNum": 99,
+        "value": "0%",
+        "targetNum": 100,
         "suffix": "%",
         "description": "Every line of code is written with performance, readability, and long-term reliability in mind."
       }
@@ -369,12 +369,12 @@
     "title": "Engineered with modern, battle-tested technologies."
   },
   "cta": {
-    "eyebrow": "// WHAT'S NEXT",
-    "title": "WHAT'S NEXT?",
+    "eyebrow": "// Let's Build Something Great",
+    "title": "Let's Build !",
     "subtitle": "Let's discuss your product roadmap, technical architecture, or build requirements.",
     "email": "hello@docompany.dev",
-    "phone": "+1 (800) 450-BUILD",
-    "buttonText": "Schedule Consultation"
+    "phone": "+91 8787878787",
+    "buttonText": "Send a Message"
   },
   "footer": {
     "companyName": "DO Company",
@@ -383,9 +383,9 @@
     "addressLine2": "San Francisco, CA 94104",
     "email": "build@docompany.dev",
     "copyrightText": "© 2026 DO Company Inc. All rights reserved.",
-    "github": "https://github.com",
-    "linkedin": "https://linkedin.com",
-    "twitter": "https://twitter.com",
+    "github": null,
+    "linkedin": null,
+    "twitter": null,
     "navLinks": [
       {
         "id": "nav-1",
@@ -437,5 +437,5 @@
     ]
   },
   "messages": [],
-  "version": 1786129100612
+  "version": 1786131165393
 }
