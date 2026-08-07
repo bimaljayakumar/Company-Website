@@ -333,6 +333,7 @@ interface DataContextType {
   addArrayItem: <K extends keyof SiteData>(section: K, arrayKey: string, item: any) => Promise<boolean>;
   updateArrayItem: <K extends keyof SiteData>(section: K, arrayKey: string, id: string, updatedItem: any) => Promise<boolean>;
   deleteArrayItem: <K extends keyof SiteData>(section: K, arrayKey: string, id: string) => Promise<boolean>;
+  moveArrayItem: <K extends keyof SiteData>(section: K, arrayKey: string, index: number, direction: 'up' | 'down') => Promise<boolean>;
   addMessage: (msg: { name: string; email: string; subject?: string; message: string }) => Promise<boolean>;
   deleteMessage: (id: string) => Promise<boolean>;
   resetToDefaults: () => Promise<boolean>;
@@ -438,6 +439,38 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
+  const moveArrayItem = async <K extends keyof SiteData>(
+    section: K,
+    arrayKey: string,
+    index: number,
+    direction: 'up' | 'down'
+  ): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setData((prev) => {
+        const sectionObj = prev[section] as any;
+        const currentArray = Array.isArray(sectionObj[arrayKey]) ? [...sectionObj[arrayKey]] : [];
+        const targetIndex = direction === 'up' ? index - 1 : index + 1;
+        if (targetIndex < 0 || targetIndex >= currentArray.length) {
+          resolve(false);
+          return prev;
+        }
+        const temp = currentArray[index];
+        currentArray[index] = currentArray[targetIndex];
+        currentArray[targetIndex] = temp;
+
+        const nextState: SiteData = {
+          ...prev,
+          [section]: {
+            ...sectionObj,
+            [arrayKey]: currentArray
+          }
+        };
+        saveDataLocally(nextState).then((res) => resolve(res));
+        return nextState;
+      });
+    });
+  };
+
   const addMessage = async (msg: { name: string; email: string; subject?: string; message: string }): Promise<boolean> => {
     const newMsg: MessageItem = {
       id: `msg-${Date.now()}`,
@@ -534,6 +567,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         addArrayItem,
         updateArrayItem,
         deleteArrayItem,
+        moveArrayItem,
         addMessage,
         deleteMessage,
         resetToDefaults,

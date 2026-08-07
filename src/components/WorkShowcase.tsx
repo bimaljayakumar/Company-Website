@@ -145,6 +145,8 @@ export const WorkShowcase: React.FC = () => {
                     <div className="mt-6 flex items-center justify-between">
                       <a
                         href={project.link || '#contact'}
+                        target={project.link && project.link !== '#' ? '_blank' : '_self'}
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 font-jakarta text-xs font-bold text-paper hover:text-primary transition-colors"
                       >
                         <span>Case Study</span>

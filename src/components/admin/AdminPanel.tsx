@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Layout, User, Briefcase, Wrench, Layers, MessageSquare, Shield, ExternalLink,
   LogOut, Save, Plus, Trash2, CheckCircle, CheckCircle2, RefreshCw, Download, Upload, Eye, EyeOff, ShieldAlert, ShieldCheck,
-  Cloud, Rocket
+  Cloud, Rocket, ChevronUp, ChevronDown
 } from 'lucide-react';
 import { useSiteData } from '../../context/DataContext';
 import { useAdminAuth } from '../../context/AdminAuthContext';
@@ -17,6 +17,7 @@ export const AdminPanel: React.FC = () => {
     addArrayItem,
     updateArrayItem,
     deleteArrayItem,
+    moveArrayItem,
     deleteMessage,
     resetToDefaults,
     setAsPermanentDefaults,
@@ -1289,7 +1290,7 @@ export const AdminPanel: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6">
-                {data.mentors.items.map((mentor) => (
+                {data.mentors.items.map((mentor, idx) => (
                   <div key={mentor.id} className="bg-black/60 border border-white/15 rounded-2xl p-5 space-y-4">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
@@ -1301,15 +1302,46 @@ export const AdminPanel: React.FC = () => {
                           <span className="font-mono text-xs text-primary">{mentor.role}</span>
                         </div>
                       </div>
-                      <button
-                        onClick={() => {
-                          deleteArrayItem('mentors', 'items', mentor.id);
-                          showToast('Mentor deleted.');
-                        }}
-                        className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          disabled={idx === 0}
+                          onClick={() => {
+                            moveArrayItem('mentors', 'items', idx, 'up');
+                            showToast('Moved mentor up!');
+                          }}
+                          title="Move Up"
+                          className={`p-2 rounded-xl border border-white/10 font-mono text-xs flex items-center gap-1 cursor-pointer transition-all ${
+                            idx === 0 ? 'opacity-30 cursor-not-allowed bg-black/40 text-slate' : 'bg-panel-light text-primary hover:bg-primary/20 hover:border-primary/40'
+                          }`}
+                        >
+                          <ChevronUp className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          disabled={idx === data.mentors.items.length - 1}
+                          onClick={() => {
+                            moveArrayItem('mentors', 'items', idx, 'down');
+                            showToast('Moved mentor down!');
+                          }}
+                          title="Move Down"
+                          className={`p-2 rounded-xl border border-white/10 font-mono text-xs flex items-center gap-1 cursor-pointer transition-all ${
+                            idx === data.mentors.items.length - 1 ? 'opacity-30 cursor-not-allowed bg-black/40 text-slate' : 'bg-panel-light text-primary hover:bg-primary/20 hover:border-primary/40'
+                          }`}
+                        >
+                          <ChevronDown className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            deleteArrayItem('mentors', 'items', mentor.id);
+                            showToast('Mentor deleted.');
+                          }}
+                          className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-sans text-xs">
@@ -1452,7 +1484,7 @@ export const AdminPanel: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {data.projects.items.map((proj) => (
+                {data.projects.items.map((proj, idx) => (
                   <div key={proj.id} className="bg-black/60 border border-white/15 rounded-2xl p-5 space-y-4">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-center gap-3">
@@ -1464,15 +1496,46 @@ export const AdminPanel: React.FC = () => {
                           <span className="font-mono text-xs text-primary">{proj.category}</span>
                         </div>
                       </div>
-                      <button
-                        onClick={() => {
-                          deleteArrayItem('projects', 'items', proj.id);
-                          showToast('Project deleted.');
-                        }}
-                        className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          disabled={idx === 0}
+                          onClick={() => {
+                            moveArrayItem('projects', 'items', idx, 'up');
+                            showToast('Moved project up!');
+                          }}
+                          title="Move Up"
+                          className={`p-2 rounded-xl border border-white/10 font-mono text-xs flex items-center gap-1 cursor-pointer transition-all ${
+                            idx === 0 ? 'opacity-30 cursor-not-allowed bg-black/40 text-slate' : 'bg-panel-light text-primary hover:bg-primary/20 hover:border-primary/40'
+                          }`}
+                        >
+                          <ChevronUp className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          disabled={idx === data.projects.items.length - 1}
+                          onClick={() => {
+                            moveArrayItem('projects', 'items', idx, 'down');
+                            showToast('Moved project down!');
+                          }}
+                          title="Move Down"
+                          className={`p-2 rounded-xl border border-white/10 font-mono text-xs flex items-center gap-1 cursor-pointer transition-all ${
+                            idx === data.projects.items.length - 1 ? 'opacity-30 cursor-not-allowed bg-black/40 text-slate' : 'bg-panel-light text-primary hover:bg-primary/20 hover:border-primary/40'
+                          }`}
+                        >
+                          <ChevronDown className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            deleteArrayItem('projects', 'items', proj.id);
+                            showToast('Project deleted.');
+                          }}
+                          className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-sans text-xs">
