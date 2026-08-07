@@ -365,73 +365,77 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   const updateSection = async <K extends keyof SiteData>(section: K, newData: Partial<SiteData[K]>): Promise<boolean> => {
-    let nextState: SiteData = data;
-    setData((prev) => {
-      const existingSection = prev[section];
-      const mergedSection =
-        typeof existingSection === 'object' && existingSection !== null && typeof newData === 'object' && newData !== null
-          ? { ...existingSection, ...newData }
-          : (newData as SiteData[K]);
+    return new Promise((resolve) => {
+      setData((prev) => {
+        const existingSection = prev[section];
+        const mergedSection =
+          typeof existingSection === 'object' && existingSection !== null && typeof newData === 'object' && newData !== null
+            ? { ...existingSection, ...newData }
+            : (newData as SiteData[K]);
 
-      nextState = {
-        ...prev,
-        [section]: mergedSection
-      };
-      return nextState;
+        const nextState: SiteData = {
+          ...prev,
+          [section]: mergedSection
+        };
+        saveDataLocally(nextState).then((res) => resolve(res));
+        return nextState;
+      });
     });
-    return await saveDataLocally(nextState);
   };
 
   const addArrayItem = async <K extends keyof SiteData>(section: K, arrayKey: string, item: any): Promise<boolean> => {
-    let nextState: SiteData = data;
-    setData((prev) => {
-      const sectionObj = prev[section] as any;
-      const currentArray = Array.isArray(sectionObj[arrayKey]) ? sectionObj[arrayKey] : [];
-      const newItem = { id: `item-${Date.now()}`, ...item };
-      nextState = {
-        ...prev,
-        [section]: {
-          ...sectionObj,
-          [arrayKey]: [...currentArray, newItem]
-        }
-      };
-      return nextState;
+    return new Promise((resolve) => {
+      setData((prev) => {
+        const sectionObj = prev[section] as any;
+        const currentArray = Array.isArray(sectionObj[arrayKey]) ? sectionObj[arrayKey] : [];
+        const newItem = { id: `item-${Date.now()}`, ...item };
+        const nextState: SiteData = {
+          ...prev,
+          [section]: {
+            ...sectionObj,
+            [arrayKey]: [...currentArray, newItem]
+          }
+        };
+        saveDataLocally(nextState).then((res) => resolve(res));
+        return nextState;
+      });
     });
-    return await saveDataLocally(nextState);
   };
 
   const updateArrayItem = async <K extends keyof SiteData>(section: K, arrayKey: string, id: string, updatedItem: any): Promise<boolean> => {
-    let nextState: SiteData = data;
-    setData((prev) => {
-      const sectionObj = prev[section] as any;
-      const currentArray = Array.isArray(sectionObj[arrayKey]) ? sectionObj[arrayKey] : [];
-      nextState = {
-        ...prev,
-        [section]: {
-          ...sectionObj,
-          [arrayKey]: currentArray.map((item: any) => (item.id === id ? { ...item, ...updatedItem } : item))
-        }
-      };
-      return nextState;
+    return new Promise((resolve) => {
+      setData((prev) => {
+        const sectionObj = prev[section] as any;
+        const currentArray = Array.isArray(sectionObj[arrayKey]) ? sectionObj[arrayKey] : [];
+        const nextState: SiteData = {
+          ...prev,
+          [section]: {
+            ...sectionObj,
+            [arrayKey]: currentArray.map((item: any) => (item.id === id ? { ...item, ...updatedItem } : item))
+          }
+        };
+        saveDataLocally(nextState).then((res) => resolve(res));
+        return nextState;
+      });
     });
-    return await saveDataLocally(nextState);
   };
 
   const deleteArrayItem = async <K extends keyof SiteData>(section: K, arrayKey: string, id: string): Promise<boolean> => {
-    let nextState: SiteData = data;
-    setData((prev) => {
-      const sectionObj = prev[section] as any;
-      const currentArray = Array.isArray(sectionObj[arrayKey]) ? sectionObj[arrayKey] : [];
-      nextState = {
-        ...prev,
-        [section]: {
-          ...sectionObj,
-          [arrayKey]: currentArray.filter((item: any) => item.id !== id)
-        }
-      };
-      return nextState;
+    return new Promise((resolve) => {
+      setData((prev) => {
+        const sectionObj = prev[section] as any;
+        const currentArray = Array.isArray(sectionObj[arrayKey]) ? sectionObj[arrayKey] : [];
+        const nextState: SiteData = {
+          ...prev,
+          [section]: {
+            ...sectionObj,
+            [arrayKey]: currentArray.filter((item: any) => item.id !== id)
+          }
+        };
+        saveDataLocally(nextState).then((res) => resolve(res));
+        return nextState;
+      });
     });
-    return await saveDataLocally(nextState);
   };
 
   const addMessage = async (msg: { name: string; email: string; subject?: string; message: string }): Promise<boolean> => {
@@ -444,27 +448,29 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       date: new Date().toLocaleString(),
       read: false
     };
-    let nextState: SiteData = data;
-    setData((prev) => {
-      nextState = {
-        ...prev,
-        messages: [newMsg, ...prev.messages]
-      };
-      return nextState;
+    return new Promise((resolve) => {
+      setData((prev) => {
+        const nextState: SiteData = {
+          ...prev,
+          messages: [newMsg, ...prev.messages]
+        };
+        saveDataLocally(nextState).then((res) => resolve(res));
+        return nextState;
+      });
     });
-    return await saveDataLocally(nextState);
   };
 
   const deleteMessage = async (id: string): Promise<boolean> => {
-    let nextState: SiteData = data;
-    setData((prev) => {
-      nextState = {
-        ...prev,
-        messages: prev.messages.filter((m) => m.id !== id)
-      };
-      return nextState;
+    return new Promise((resolve) => {
+      setData((prev) => {
+        const nextState: SiteData = {
+          ...prev,
+          messages: prev.messages.filter((m) => m.id !== id)
+        };
+        saveDataLocally(nextState).then((res) => resolve(res));
+        return nextState;
+      });
     });
-    return await saveDataLocally(nextState);
   };
 
   const resetToDefaults = async (): Promise<boolean> => {
