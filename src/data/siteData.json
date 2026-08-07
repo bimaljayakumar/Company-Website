@@ -71,9 +71,9 @@
       {
         "id": "stat-3",
         "tag": "// CODE QUALITY",
-        "value": "100%",
-        "targetNum": 101,
-        "suffix": " Wk",
+        "value": "99%",
+        "targetNum": 99,
+        "suffix": "%",
         "description": "Every line of code is written with performance, readability, and long-term reliability in mind."
       }
     ],

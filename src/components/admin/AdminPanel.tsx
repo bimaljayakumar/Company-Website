@@ -255,11 +255,11 @@ export const AdminPanel: React.FC = () => {
         },
         {
           id: 'stat-3',
-          tag: formData.get('stat3Tag') as string || '// SPEED TO MARKET',
-          value: formData.get('stat3Val') as string || '6 Wk',
-          targetNum: parseInt(formData.get('stat3Target') as string || '6', 10),
-          suffix: formData.get('stat3Suffix') as string || ' Wk',
-          description: formData.get('stat3Desc') as string || 'Average timeframe from specs sign-off to live production deployment.',
+          tag: formData.get('stat3Tag') as string || '// CODE QUALITY',
+          value: formData.get('stat3Val') as string || '99%',
+          targetNum: parseInt(formData.get('stat3Target') as string || '99', 10),
+          suffix: (formData.get('stat3Suffix') as string) || ((formData.get('stat3Val') as string || '').includes('%') ? '%' : (formData.get('stat3Val') as string || '').includes('+') ? '+' : '%'),
+          description: formData.get('stat3Desc') as string || 'Every line of code is written with performance, readability, and long-term reliability in mind.',
         },
       ],
     });

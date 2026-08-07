@@ -121,7 +121,15 @@ export const AboutSection: React.FC = () => {
                   className="stat-number"
                   data-target={stat.targetNum || parseInt(stat.value, 10) || 0}
                   data-prefix=""
-                  data-suffix={stat.suffix || (stat.value.includes('+') ? '+' : stat.value.includes('%') ? '%' : '')}
+                  data-suffix={
+                    stat.value && stat.value.trim().endsWith('%')
+                      ? '%'
+                      : stat.value && stat.value.trim().endsWith('+')
+                      ? '+'
+                      : stat.suffix !== undefined && stat.suffix !== null
+                      ? stat.suffix
+                      : ''
+                  }
                 >
                   {stat.value}
                 </span>
