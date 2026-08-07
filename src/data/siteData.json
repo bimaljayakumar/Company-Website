@@ -8,7 +8,7 @@
     "headlineWord1": "BUILD",
     "headlineWord2": "",
     "headlineWord3": "WHAT'S",
-    "headlineWord4": "NEXT.",
+    "headlineWord4": "NEXT?",
     "glowingTarget": "NEXT",
     "glowingWords": {
       "word1": false,
@@ -457,5 +457,5 @@
     ]
   },
   "messages": [],
-  "version": 1786132841266
+  "version": 1786132990158
 }
