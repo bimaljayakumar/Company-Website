@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Terminal, Sparkles } from 'lucide-react';
@@ -12,15 +12,17 @@ export const FounderSection: React.FC = () => {
   const { founder } = data;
   const imageRef = useRef<HTMLImageElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     if (!imageRef.current || !sectionRef.current) return;
+    if (window.innerWidth < 768) return; // Skip parallax on small mobile screens to prevent clipping & WebKit render bugs
 
-    gsap.fromTo(
+    const tween = gsap.fromTo(
       imageRef.current,
-      { y: -30 },
+      { y: -20 },
       {
-        y: 30,
+        y: 20,
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -30,7 +32,11 @@ export const FounderSection: React.FC = () => {
         },
       }
     );
-  }, []);
+
+    return () => {
+      tween.kill();
+    };
+  }, [founder.image]);
 
   return (
     <section id="founder" ref={sectionRef} className="py-24 sm:py-32 bg-black relative overflow-hidden">
@@ -49,13 +55,14 @@ export const FounderSection: React.FC = () => {
           
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
-          {founder.image ? (
+          {founder.image && !imageError ? (
             <div className="lg:col-span-5 relative overflow-hidden rounded-2xl border border-white/10 h-[380px] sm:h-[420px] bg-panel-light group">
               <img
                 ref={imageRef}
                 src={founder.image}
                 alt={founder.name}
-                loading="lazy"
+                loading="eager"
+                onError={() => setImageError(true)}
                 className="w-full h-full object-cover object-center filter grayscale contrast-110 hover:grayscale-0 transition-all duration-500"
               />
               <div className="absolute bottom-4 left-4 bg-black/90 backdrop-blur-md px-4 py-2 rounded-xl border border-white/15 flex items-center gap-2">

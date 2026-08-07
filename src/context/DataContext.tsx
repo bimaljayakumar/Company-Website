@@ -203,6 +203,7 @@ export interface CloudinaryConfigData {
 }
 
 export interface SiteData {
+  version?: number | string;
   hero: HeroData;
   about: AboutData;
   services: ServicesData;
@@ -222,9 +223,22 @@ const DEFAULT_SITE_DATA: SiteData = initialSiteData as SiteData;
 
 const STORAGE_KEY = "docompany_portfolio_site_data_v1";
 const PERMANENT_DEFAULT_KEY = "docompany_permanent_default_data_v1";
+const VERSION_KEY = "docompany_site_data_version_v1";
 
 const getBaselineDefaults = (): SiteData => {
   try {
+    const savedVersion = localStorage.getItem(VERSION_KEY);
+    const builtInVersion = String(DEFAULT_SITE_DATA.version || '');
+
+    // If built-in deployed siteData.json has a newer/different version than cached locally,
+    // invalidate stale cache so all devices pick up the latest live content.
+    if (builtInVersion && savedVersion !== builtInVersion) {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(PERMANENT_DEFAULT_KEY);
+      localStorage.setItem(VERSION_KEY, builtInVersion);
+      return DEFAULT_SITE_DATA;
+    }
+
     const customDefault = localStorage.getItem(PERMANENT_DEFAULT_KEY);
     if (customDefault) {
       return { ...DEFAULT_SITE_DATA, ...JSON.parse(customDefault) };
@@ -357,12 +371,15 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updateSection = async <K extends keyof SiteData>(section: K, newData: Partial<SiteData[K]>): Promise<boolean> => {
     let nextState: SiteData = data;
     setData((prev) => {
+      const existingSection = prev[section];
+      const mergedSection =
+        typeof existingSection === 'object' && existingSection !== null && typeof newData === 'object' && newData !== null
+          ? { ...existingSection, ...newData }
+          : (newData as SiteData[K]);
+
       nextState = {
         ...prev,
-        [section]: {
-          ...prev[section],
-          ...newData
-        }
+        [section]: mergedSection
       };
       return nextState;
     });
@@ -493,7 +510,14 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const deployToLive = async (): Promise<boolean> => {
-    return await commitToGitHubLive(data);
+    const nextVersion = Date.now();
+    const updatedState = { ...data, version: nextVersion };
+    setData(updatedState);
+    await saveDataLocally(updatedState);
+    try {
+      localStorage.setItem(VERSION_KEY, String(nextVersion));
+    } catch (e) {}
+    return await commitToGitHubLive(updatedState);
   };
 
   return (

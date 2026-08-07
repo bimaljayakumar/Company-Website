@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useSiteData } from '../../context/DataContext';
 import { useAdminAuth } from '../../context/AdminAuthContext';
-import { uploadToCloudinary, getCloudinaryConfig } from '../../utils/cloudinary';
+import { getCloudinaryConfig } from '../../utils/cloudinary';
 
 export const AdminPanel: React.FC = () => {
   const navigate = useNavigate();
@@ -64,9 +64,6 @@ export const AdminPanel: React.FC = () => {
     }
   };
 
-  // Media & Cloudinary Upload State
-  const [isUploadingMedia, setIsUploadingMedia] = useState(false);
-  const [uploadProgressText, setUploadProgressText] = useState('');
   const [cloudinaryCloudName, setCloudinaryCloudName] = useState(data.cloudinary?.cloudName || '');
   const [cloudinaryUploadPreset, setCloudinaryUploadPreset] = useState(data.cloudinary?.uploadPreset || '');
 
@@ -83,56 +80,6 @@ export const AdminPanel: React.FC = () => {
     if (data.cloudinary?.cloudName !== undefined) setCloudinaryCloudName(data.cloudinary.cloudName);
     if (data.cloudinary?.uploadPreset !== undefined) setCloudinaryUploadPreset(data.cloudinary.uploadPreset);
   }, [data.founder.image, data.hero.videoUrl, data.hero.videoOpacity, data.cloudinary]);
-
-  const handleFileUpload = async (
-    file: File,
-    onSuccess: (url: string) => void,
-    successMessage: string = 'File uploaded successfully!'
-  ) => {
-    const config = getCloudinaryConfig({
-      cloudName: cloudinaryCloudName || data.cloudinary?.cloudName,
-      uploadPreset: cloudinaryUploadPreset || data.cloudinary?.uploadPreset,
-    });
-
-    if (config.cloudName && config.uploadPreset) {
-      setIsUploadingMedia(true);
-      setUploadProgressText(`Uploading ${file.name} to Cloudinary...`);
-      try {
-        const url = await uploadToCloudinary(file, config);
-        onSuccess(url);
-        showToast(`Uploaded to Cloudinary CDN & saved!`, false);
-      } catch (err: any) {
-        console.error(err);
-        showToast(`Cloudinary Upload Failed: ${err.message}`, false);
-      } finally {
-        setIsUploadingMedia(false);
-        setUploadProgressText('');
-      }
-    } else {
-      if (file.size > 8 * 1024 * 1024) {
-        showToast('File > 8MB. Configure Cloudinary Cloud Name & Upload Preset in Settings for CDN video/photo hosting.', false);
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        if (evt.target?.result) {
-          onSuccess(evt.target.result as string);
-          showToast(`${successMessage} (Tip: Configure Cloudinary in settings to host files on high-speed CDN)`, false);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleFounderImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      handleFileUpload(file, (url) => {
-        setFounderImage(url);
-        updateSection('founder', { image: url });
-      }, 'Founder image loaded!');
-    }
-  };
 
   // Credentials State
   const [currentPassword, setCurrentPassword] = useState('');
@@ -1159,47 +1106,35 @@ export const AdminPanel: React.FC = () => {
 
                 <div className="p-4 rounded-2xl bg-black/60 border border-white/15 space-y-4">
                   <div className="flex items-center justify-between">
-                    <label className="block font-mono text-xs text-primary font-bold uppercase tracking-wider">
-                      // FOUNDER PORTRAIT IMAGE
-                    </label>
-                    <span className="text-[10px] font-mono text-slate">Supports JPG, PNG, WEBP, SVG & Base64</span>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-                    {/* Local File Upload Section */}
-                    <div className="md:col-span-6 flex flex-col gap-2">
-                      <label className="cursor-pointer flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary/10 border border-primary/40 text-primary hover:bg-primary/20 hover:border-primary transition-all font-mono text-xs font-bold text-center">
-                        <Upload className="w-4 h-4" />
-                        <span>Upload Image File...</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={handleFounderImageUpload}
-                        />
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block font-mono text-xs text-primary font-bold uppercase tracking-wider">
+                        // FOUNDER PORTRAIT IMAGE URL
                       </label>
-                      <span className="text-[10px] font-mono text-slate/70 text-center">
-                        Upload local image file directly from your computer
-                      </span>
+                      <span className="text-[10px] font-mono text-slate">Paste any direct image URL (JPG, PNG, WEBP, SVG)</span>
                     </div>
 
-                    {/* Optional Image URL Input & Preview */}
-                    <div className="md:col-span-6 flex flex-col gap-1">
-                      <label className="block font-mono text-[10px] text-slate">Image URL (Optional)</label>
-                      <div className="flex items-center gap-3">
-                        <input
-                          type="text"
-                          name="image"
-                          value={founderImage}
-                          onChange={(e) => setFounderImage(e.target.value)}
-                          placeholder="https://... or upload image file"
-                          className="flex-1 bg-black/70 border border-white/15 rounded-xl px-4 py-2.5 text-paper focus:border-primary focus:outline-none font-mono text-xs"
-                        />
-                        <div className="w-12 h-12 rounded-xl bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-sm shrink-0">
-                          {data.founder.name ? data.founder.name.charAt(0) : 'D'}
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="text"
+                        name="image"
+                        value={founderImage}
+                        onChange={(e) => setFounderImage(e.target.value)}
+                        placeholder="https://images.unsplash.com/... or /images/founder.jpg"
+                        className="flex-1 bg-black/80 border border-white/15 rounded-xl px-4 py-3 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                      />
+                      {founderImage && (
+                        <div className="w-12 h-12 rounded-xl bg-panel border border-primary/40 overflow-hidden shrink-0">
+                          <img
+                            src={founderImage}
+                            alt="Founder Preview"
+                            className="w-full h-full object-cover"
+                            onError={(e) => (e.currentTarget.style.display = 'none')}
+                          />
                         </div>
-                      </div>
+                      )}
                     </div>
+                  </div>
                   </div>
                 </div>
 
@@ -1393,43 +1328,27 @@ export const AdminPanel: React.FC = () => {
                     </div>
 
                     <div className="space-y-2 pt-2 border-t border-white/10">
-                      <div className="flex items-center justify-between">
-                        <label className="block font-mono text-[10px] text-slate font-bold uppercase">
-                          Mentor Portrait Image
-                        </label>
-                        <label className="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-all font-mono text-[11px] font-bold">
-                          <Upload className="w-3.5 h-3.5" />
-                          <span>Upload Image File...</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                handleFileUpload(file, (url) => {
-                                  updateArrayItem('mentors', 'items', mentor.id, { image: url });
-                                }, `Image loaded for ${mentor.name}!`);
-                              }
-                            }}
-                          />
-                        </label>
-                      </div>
-
-                      <div>
-                        <label className="block font-mono text-[10px] text-slate/70 mb-1">Or edit Image URL (Optional)</label>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="text"
-                            value={mentor.image}
-                            onChange={(e) => updateArrayItem('mentors', 'items', mentor.id, { image: e.target.value })}
-                            placeholder="https://... or upload local image file above"
-                            className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
-                          />
-                          <div className="w-9 h-9 rounded-lg bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-xs shrink-0">
-                            {mentor.name ? mentor.name.charAt(0) : 'M'}
+                      <label className="block font-mono text-[10px] text-slate font-bold uppercase">
+                        Mentor Portrait Image URL
+                      </label>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="text"
+                          value={mentor.image}
+                          onChange={(e) => updateArrayItem('mentors', 'items', mentor.id, { image: e.target.value })}
+                          placeholder="https://images.unsplash.com/... or /images/mentor.jpg"
+                          className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                        />
+                        {mentor.image && (
+                          <div className="w-9 h-9 rounded-lg bg-panel border border-primary/40 overflow-hidden shrink-0">
+                            <img
+                              src={mentor.image}
+                              alt={mentor.name}
+                              className="w-full h-full object-cover"
+                              onError={(e) => (e.currentTarget.style.display = 'none')}
+                            />
                           </div>
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -1573,43 +1492,27 @@ export const AdminPanel: React.FC = () => {
                     </div>
 
                     <div className="space-y-2 pt-2 border-t border-white/10">
-                      <div className="flex items-center justify-between">
-                        <label className="block font-mono text-[10px] text-slate font-bold uppercase">
-                          Project Showcase Image
-                        </label>
-                        <label className="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-all font-mono text-[11px] font-bold">
-                          <Upload className="w-3.5 h-3.5" />
-                          <span>Upload Image File...</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                handleFileUpload(file, (url) => {
-                                  updateArrayItem('projects', 'items', proj.id, { image: url });
-                                }, `Image loaded for ${proj.title}!`);
-                              }
-                            }}
-                          />
-                        </label>
-                      </div>
-
-                      <div>
-                        <label className="block font-mono text-[10px] text-slate/70 mb-1">Or edit Image URL / Path (Optional)</label>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="text"
-                            value={proj.image}
-                            onChange={(e) => updateArrayItem('projects', 'items', proj.id, { image: e.target.value })}
-                            placeholder="https://... or /images/... or upload image file"
-                            className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
-                          />
-                          <div className="w-12 h-8 rounded-lg bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-[10px] shrink-0">
-                            PROJ
+                      <label className="block font-mono text-[10px] text-slate font-bold uppercase">
+                        Project Showcase Image URL
+                      </label>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="text"
+                          value={proj.image}
+                          onChange={(e) => updateArrayItem('projects', 'items', proj.id, { image: e.target.value })}
+                          placeholder="https://images.unsplash.com/... or /images/project-1.webp"
+                          className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                        />
+                        {proj.image && (
+                          <div className="w-12 h-8 rounded-lg bg-panel border border-primary/40 overflow-hidden shrink-0">
+                            <img
+                              src={proj.image}
+                              alt={proj.title}
+                              className="w-full h-full object-cover"
+                              onError={(e) => (e.currentTarget.style.display = 'none')}
+                            />
                           </div>
-                        </div>
+                        )}
                       </div>
                     </div>
 
@@ -1681,35 +1584,16 @@ export const AdminPanel: React.FC = () => {
                   </div>
                   <div className="md:col-span-2 space-y-3 pt-3 border-t border-white/10">
                     <div className="flex items-center justify-between">
-                      <label className="block font-mono text-[10px] text-slate font-bold uppercase">Services Background Video (URL or Path)</label>
+                      <label className="block font-mono text-[10px] text-slate font-bold uppercase">Services Background Video URL</label>
                       <span className="font-mono text-xs text-primary font-bold">Opacity: {servicesVideoOpacity}%</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="text"
-                        value={data.services.videoUrl || ''}
-                        onChange={(e) => updateSection('services', { videoUrl: e.target.value })}
-                        placeholder="/services-background.mp4 or https://..."
-                        className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs font-bold"
-                      />
-                      <label className="cursor-pointer px-4 py-2 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-all font-mono text-xs font-bold shrink-0 flex items-center gap-1.5">
-                        <Upload className="w-3.5 h-3.5" />
-                        <span>Upload Video</span>
-                        <input
-                          type="file"
-                          accept="video/*"
-                          className="hidden"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) {
-                              handleFileUpload(file, (url) => {
-                                updateSection('services', { videoUrl: url });
-                              }, 'Services background video loaded!');
-                            }
-                          }}
-                        />
-                      </label>
-                    </div>
+                    <input
+                      type="text"
+                      value={data.services.videoUrl || ''}
+                      onChange={(e) => updateSection('services', { videoUrl: e.target.value })}
+                      placeholder="https://.../video.mp4 or /services-background.mp4"
+                      className="w-full bg-black/80 border border-white/15 rounded-lg px-3.5 py-2.5 text-paper focus:border-primary focus:outline-none font-mono text-xs font-bold"
+                    />
 
                     {/* Services Video Opacity Slider */}
                     <div className="space-y-2 pt-2 border-t border-white/10 font-sans text-xs">
@@ -2052,43 +1936,27 @@ export const AdminPanel: React.FC = () => {
 
                     {/* Author Portrait Image Upload */}
                     <div className="space-y-2 pt-2 border-t border-white/10 font-sans text-xs">
-                      <div className="flex items-center justify-between">
-                        <label className="block font-mono text-[10px] text-slate font-bold uppercase">
-                          Author Portrait Image
-                        </label>
-                        <label className="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-all font-mono text-[11px] font-bold">
-                          <Upload className="w-3.5 h-3.5" />
-                          <span>Upload Image File...</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                handleFileUpload(file, (url) => {
-                                  updateArrayItem('testimonials', 'items', test.id, { image: url });
-                                }, `Portrait image loaded for ${test.author}!`);
-                              }
-                            }}
-                          />
-                        </label>
-                      </div>
-
-                      <div>
-                        <label className="block font-mono text-[10px] text-slate/70 mb-1">Or edit Image URL / Path (Optional)</label>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="text"
-                            value={test.image}
-                            onChange={(e) => updateArrayItem('testimonials', 'items', test.id, { image: e.target.value })}
-                            placeholder="https://... or upload local image file above"
-                            className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
-                          />
-                          <div className="w-10 h-10 rounded-full bg-panel border border-primary/40 flex items-center justify-center font-mono font-bold text-primary text-xs shrink-0">
-                            {test.author ? test.author.charAt(0) : 'T'}
+                      <label className="block font-mono text-[10px] text-slate font-bold uppercase">
+                        Author Portrait Image URL
+                      </label>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="text"
+                          value={test.image}
+                          onChange={(e) => updateArrayItem('testimonials', 'items', test.id, { image: e.target.value })}
+                          placeholder="https://images.unsplash.com/... or /images/author.jpg"
+                          className="flex-1 bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                        />
+                        {test.image && (
+                          <div className="w-9 h-9 rounded-full bg-panel border border-primary/40 overflow-hidden shrink-0">
+                            <img
+                              src={test.image}
+                              alt={test.author}
+                              className="w-full h-full object-cover"
+                              onError={(e) => (e.currentTarget.style.display = 'none')}
+                            />
                           </div>
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -2948,19 +2816,6 @@ export const AdminPanel: React.FC = () => {
         </div>
       )}
 
-      {/* Cloudinary Upload Progress Overlay */}
-      {isUploadingMedia && (
-        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-[10000] flex flex-col items-center justify-center text-center p-6 select-none">
-          <div className="w-16 h-16 rounded-2xl bg-panel border-2 border-primary flex items-center justify-center text-primary shadow-2xl shadow-primary/20 animate-bounce mb-4">
-            <Cloud className="w-8 h-8 animate-pulse" />
-          </div>
-          <h3 className="font-jakarta font-black text-xl text-paper mb-2">Uploading to Cloudinary CDN...</h3>
-          <p className="font-mono text-xs text-primary mb-4">{uploadProgressText}</p>
-          <div className="w-64 h-1.5 bg-white/10 rounded-full overflow-hidden">
-            <div className="h-full bg-primary animate-pulse w-full" />
-          </div>
-        </div>
-      )}
     </div>
   );
 };
