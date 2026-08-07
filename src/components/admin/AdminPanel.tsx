@@ -1354,6 +1354,20 @@ export const AdminPanel: React.FC = () => {
                   </div>
                 ))}
               </div>
+
+              <div className="pt-4 border-t border-white/10 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateSection('mentors', { items: data.mentors.items, eyebrow: data.mentors.eyebrow, title: data.mentors.title });
+                    showToast('Mentors section saved locally! Click "Deploy to Live" at top to publish.');
+                  }}
+                  className="px-6 py-3 rounded-xl bg-primary text-ink font-jakarta font-extrabold text-sm flex items-center gap-2 cursor-pointer shadow-lg shadow-primary/20 hover:bg-white transition-all"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Save Mentors Section</span>
+                </button>
+              </div>
             </div>
           )}
 
@@ -1527,6 +1541,20 @@ export const AdminPanel: React.FC = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateSection('projects', { items: data.projects.items, eyebrow: data.projects.eyebrow, title: data.projects.title });
+                    showToast('Projects section saved locally! Click "Deploy to Live" at top to publish.');
+                  }}
+                  className="px-6 py-3 rounded-xl bg-primary text-ink font-jakarta font-extrabold text-sm flex items-center gap-2 cursor-pointer shadow-lg shadow-primary/20 hover:bg-white transition-all"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Save Projects Section</span>
+                </button>
               </div>
             </div>
           )}
@@ -1718,6 +1746,21 @@ export const AdminPanel: React.FC = () => {
                   </div>
                 ))}
               </div>
+
+              <div className="pt-4 border-t border-white/10 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateSection('services', { items: data.services.items, eyebrow: data.services.eyebrow, title: data.services.title, videoUrl: data.services.videoUrl, videoOpacity: data.services.videoOpacity });
+                    if (data.toolkit) updateSection('toolkit', { eyebrow: data.toolkit.eyebrow, title: data.toolkit.title });
+                    showToast('Services section saved locally! Click "Deploy to Live" at top to publish.');
+                  }}
+                  className="px-6 py-3 rounded-xl bg-primary text-ink font-jakarta font-extrabold text-sm flex items-center gap-2 cursor-pointer shadow-lg shadow-primary/20 hover:bg-white transition-all"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Save Services Section</span>
+                </button>
+              </div>
             </div>
           )}
 
@@ -1811,6 +1854,20 @@ export const AdminPanel: React.FC = () => {
                     />
                   </div>
                 ))}
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateSection('process', { steps: data.process.steps, eyebrow: data.process.eyebrow, title: data.process.title });
+                    showToast('Process section saved locally! Click "Deploy to Live" at top to publish.');
+                  }}
+                  className="px-6 py-3 rounded-xl bg-primary text-ink font-jakarta font-extrabold text-sm flex items-center gap-2 cursor-pointer shadow-lg shadow-primary/20 hover:bg-white transition-all"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Save Process Section</span>
+                </button>
               </div>
             </div>
           )}
@@ -1961,6 +2018,20 @@ export const AdminPanel: React.FC = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateSection('testimonials', { items: data.testimonials.items, eyebrow: data.testimonials.eyebrow, title: data.testimonials.title });
+                    showToast('Testimonials section saved locally! Click "Deploy to Live" at top to publish.');
+                  }}
+                  className="px-6 py-3 rounded-xl bg-primary text-ink font-jakarta font-extrabold text-sm flex items-center gap-2 cursor-pointer shadow-lg shadow-primary/20 hover:bg-white transition-all"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Save Testimonials Section</span>
+                </button>
               </div>
             </div>
           )}
