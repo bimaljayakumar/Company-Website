@@ -317,6 +317,16 @@
         "description": "A cinematic, interactive developer portfolio built with Next.js, featuring a scroll-driven hero, immersive animations.",
         "link": "https://bimaljayakumar.vercel.app/",
         "year": "2026"
+      },
+      {
+        "id": "item-1786179221978",
+        "title": "MGU Result Fetch Tool",
+        "category": "Web App",
+        "technologies": "Python, Flask, HTML5, CSS3, JavaScript",
+        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786178976/ChatGPT_Image_Aug_8_2026_02_19_04_PM_dg4aik.png",
+        "description": "A fast result-fetching web tool designed to retrieve results for an entire batch of students at once, reducing repetitive manual work and making result collection, organization, and PDF generation significantly faster and easier.",
+        "link": "https://mguresultcheck.vercel.app/",
+        "year": "2026"
       }
     ]
   },
@@ -475,5 +485,5 @@
     ]
   },
   "messages": [],
-  "version": 1786175924082
+  "version": 1786179412140
 }
