@@ -73,7 +73,7 @@ export const Navbar: React.FC = () => {
             <a
               href="#"
               onClick={(e) => handleNavClick(e, '#')}
-              className="flex items-center gap-2.5 group focus:outline-none flex-shrink-0 max-w-[180px] sm:max-w-[280px] md:max-w-none"
+              className="flex items-center gap-2 sm:gap-2.5 group focus:outline-none shrink-0"
             >
               {footer?.companyLogo && (
                 <img
@@ -83,7 +83,7 @@ export const Navbar: React.FC = () => {
                   onError={(e) => (e.currentTarget.style.display = 'none')}
                 />
               )}
-              <span className="font-jakarta text-xs sm:text-sm font-black tracking-wider text-paper uppercase truncate max-w-[90px] sm:max-w-[180px] md:max-w-[220px]">
+              <span className="font-jakarta text-xs sm:text-sm font-black tracking-wider text-paper uppercase whitespace-nowrap">
                 {footer?.companyName || "DO Company"}
               </span>
             </a>
