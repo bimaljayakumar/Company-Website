@@ -375,7 +375,15 @@
         "name": "Nithal John Varghese",
         "role": "Lead Developer",
         "specialty": "Full Stack Development",
-        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786122253/Picsart_26-08-02_21-35-00-079.jpg_cc8qcp.jpg",
+        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786175575/copy_of_picsart_26-08-02_21-35-00-079jpg_cc8qcp.jpg",
+        "tag": "Full Stack Development"
+      },
+      {
+        "id": "item-1786175823899",
+        "name": "Vivek P S",
+        "role": "Lead Developer",
+        "specialty": "Full Stack Development",
+        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786175720/IMG_20260808_132435.jpg_m9ihn0.jpg",
         "tag": "Full Stack Development"
       }
     ]
@@ -467,5 +475,5 @@
     ]
   },
   "messages": [],
-  "version": 1786136816418
+  "version": 1786175924082
 }
