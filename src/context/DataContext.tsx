@@ -203,8 +203,21 @@ export interface CloudinaryConfigData {
   uploadPreset: string;
 }
 
+export interface NavbarNavLink {
+  id: string;
+  name: string;
+  href: string;
+}
+
+export interface NavbarData {
+  ctaText?: string;
+  ctaLink?: string;
+  navLinks?: NavbarNavLink[];
+}
+
 export interface SiteData {
   version?: number | string;
+  navbar?: NavbarData;
   hero: HeroData;
   about: AboutData;
   services: ServicesData;

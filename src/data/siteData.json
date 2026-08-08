@@ -484,6 +484,42 @@
       }
     ]
   },
+  "navbar": {
+    "ctaText": "Start a Project",
+    "ctaLink": "#contact",
+    "navLinks": [
+      {
+        "id": "nav-1",
+        "name": "SERVICES",
+        "href": "#services"
+      },
+      {
+        "id": "nav-2",
+        "name": "WORK",
+        "href": "#work"
+      },
+      {
+        "id": "nav-3",
+        "name": "PROCESS",
+        "href": "#process"
+      },
+      {
+        "id": "nav-4",
+        "name": "FOUNDER",
+        "href": "#founder"
+      },
+      {
+        "id": "nav-5",
+        "name": "MENTORS",
+        "href": "#mentors"
+      },
+      {
+        "id": "nav-6",
+        "name": "CONTACT",
+        "href": "#contact"
+      }
+    ]
+  },
   "messages": [],
   "version": 1786179412140
 }

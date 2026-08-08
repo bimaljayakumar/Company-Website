@@ -4,18 +4,22 @@ import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { MagneticButton } from './MagneticButton';
 import { useSiteData } from '../context/DataContext';
 
-const NAV_LINKS = [
-  { name: 'SERVICES', href: '#services' },
-  { name: 'WORK', href: '#work' },
-  { name: 'PROCESS', href: '#process' },
-  { name: 'FOUNDER', href: '#founder' },
-  { name: 'MENTORS', href: '#mentors' },
-  { name: 'CONTACT', href: '#contact' },
+const DEFAULT_NAV_LINKS = [
+  { id: 'nav-1', name: 'SERVICES', href: '#services' },
+  { id: 'nav-2', name: 'WORK', href: '#work' },
+  { id: 'nav-3', name: 'PROCESS', href: '#process' },
+  { id: 'nav-4', name: 'FOUNDER', href: '#founder' },
+  { id: 'nav-5', name: 'MENTORS', href: '#mentors' },
+  { id: 'nav-6', name: 'CONTACT', href: '#contact' },
 ];
 
 export const Navbar: React.FC = () => {
   const { data } = useSiteData();
-  const { footer } = data;
+  const { footer, navbar } = data;
+  const navLinks = navbar?.navLinks && navbar.navLinks.length > 0 ? navbar.navLinks : DEFAULT_NAV_LINKS;
+  const ctaText = navbar?.ctaText || 'Start a Project';
+  const ctaLink = navbar?.ctaLink || '#contact';
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
@@ -86,9 +90,9 @@ export const Navbar: React.FC = () => {
 
             {/* Center: Desktop Nav Links inside the single glass bar */}
             <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
-              {NAV_LINKS.map((link) => (
+              {navLinks.map((link) => (
                 <a
-                  key={link.name}
+                  key={link.id || link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
                   onMouseEnter={() => setHoveredLink(link.name)}
@@ -109,15 +113,24 @@ export const Navbar: React.FC = () => {
 
             {/* Right: Status Pill & CTA Button */}
             <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
-              <MagneticButton href="#contact" strength={15} onClick={() => {
-                const elem = document.getElementById('contact');
-                if (elem) {
-                  const y = elem.getBoundingClientRect().top + window.pageYOffset - 70;
-                  window.scrollTo({ top: y, behavior: 'smooth' });
+              <MagneticButton href={ctaLink} strength={15} onClick={() => {
+                if (ctaLink.startsWith('#')) {
+                  const targetId = ctaLink.replace('#', '');
+                  if (!targetId) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  } else {
+                    const targetElem = document.getElementById(targetId);
+                    if (targetElem) {
+                      const y = targetElem.getBoundingClientRect().top + window.pageYOffset - 70;
+                      window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                  }
+                } else {
+                  window.location.href = ctaLink;
                 }
               }}>
                 <div className="px-4 sm:px-5 py-2 rounded-full bg-primary text-ink font-jakarta text-xs font-extrabold tracking-wide hover:bg-white hover:shadow-lg hover:shadow-primary/30 transition-all duration-300 flex items-center gap-1.5 cursor-pointer">
-                  <span>Start a Project</span>
+                  <span>{ctaText}</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
               </MagneticButton>
@@ -146,9 +159,9 @@ export const Navbar: React.FC = () => {
             className="fixed inset-0 z-40 bg-black/98 backdrop-blur-3xl flex flex-col justify-center px-8 lg:hidden"
           >
             <div className="flex flex-col gap-6 max-w-md mx-auto w-full">
-              {NAV_LINKS.map((link, idx) => (
+              {navLinks.map((link, idx) => (
                 <motion.a
-                  key={link.name}
+                  key={link.id || link.name}
                   href={link.href}
                   onClick={(e) => {
                     setMobileMenuOpen(false);
@@ -167,18 +180,18 @@ export const Navbar: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: NAV_LINKS.length * 0.07 }}
+                transition={{ delay: navLinks.length * 0.07 }}
                 className="mt-4"
               >
                 <a
-                  href="#contact"
+                  href={ctaLink}
                   onClick={(e) => {
                     setMobileMenuOpen(false);
-                    handleNavClick(e, '#contact');
+                    handleNavClick(e, ctaLink);
                   }}
                   className="w-full py-4 rounded-full bg-primary text-ink text-center font-jakarta font-extrabold text-sm block shadow-lg shadow-primary/20 cursor-pointer"
                 >
-                  Start a Project
+                  {ctaText}
                 </a>
               </motion.div>
             </div>

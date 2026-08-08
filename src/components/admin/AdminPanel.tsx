@@ -44,6 +44,7 @@ export const AdminPanel: React.FC = () => {
 
   type AdminTab =
     | 'hero'
+    | 'navbar'
     | 'founder'
     | 'mentors'
     | 'projects'
@@ -316,6 +317,58 @@ export const AdminPanel: React.FC = () => {
     showToast('CTA & Footer updated successfully!');
   };
 
+  const handleSaveNavbar = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const currentLinks = data.navbar?.navLinks && data.navbar.navLinks.length > 0
+      ? data.navbar.navLinks
+      : [
+          { id: 'nav-1', name: 'SERVICES', href: '#services' },
+          { id: 'nav-2', name: 'WORK', href: '#work' },
+          { id: 'nav-3', name: 'PROCESS', href: '#process' },
+          { id: 'nav-4', name: 'FOUNDER', href: '#founder' },
+          { id: 'nav-5', name: 'MENTORS', href: '#mentors' },
+          { id: 'nav-6', name: 'CONTACT', href: '#contact' },
+        ];
+
+    const updatedLinks = currentLinks.map((link, idx) => ({
+      ...link,
+      name: (formData.get(`navLinkName_${idx}`) as string) || link.name,
+      href: (formData.get(`navLinkHref_${idx}`) as string) || link.href,
+    }));
+
+    updateSection('navbar', {
+      ctaText: (formData.get('navbarCtaText') as string) || 'Start a Project',
+      ctaLink: (formData.get('navbarCtaLink') as string) || '#contact',
+      navLinks: updatedLinks,
+    });
+    addAuditLog('UPDATE_NAVBAR', 'Navbar header navigation updated.');
+    showToast('Navbar options saved successfully!');
+  };
+
+  const handleAddNavLink = () => {
+    const currentLinks = data.navbar?.navLinks && data.navbar.navLinks.length > 0
+      ? [...data.navbar.navLinks]
+      : [
+          { id: 'nav-1', name: 'SERVICES', href: '#services' },
+          { id: 'nav-2', name: 'WORK', href: '#work' },
+          { id: 'nav-3', name: 'PROCESS', href: '#process' },
+          { id: 'nav-4', name: 'FOUNDER', href: '#founder' },
+          { id: 'nav-5', name: 'MENTORS', href: '#mentors' },
+          { id: 'nav-6', name: 'CONTACT', href: '#contact' },
+        ];
+    const newLink = {
+      id: `nav-${Date.now()}`,
+      name: 'NEW OPTION',
+      href: '#contact',
+    };
+    updateSection('navbar', {
+      ...data.navbar,
+      navLinks: [...currentLinks, newLink],
+    });
+    showToast('New Navbar link option added!');
+  };
+
   const handleExportData = () => {
     const jsonStr = JSON.stringify(data, null, 2);
     const blob = new Blob([jsonStr], { type: 'application/json' });
@@ -440,6 +493,16 @@ export const AdminPanel: React.FC = () => {
           </button>
 
           <button
+            onClick={() => setActiveTab('navbar')}
+            className={`w-full text-left px-4 py-3.5 rounded-2xl font-mono text-xs flex items-center gap-3 transition-all cursor-pointer ${
+              activeTab === 'navbar' ? 'bg-primary text-ink font-bold shadow-lg shadow-primary/20' : 'text-slate hover:bg-white/5 hover:text-paper'
+            }`}
+          >
+            <Layout className="w-4 h-4" />
+            <span>Navbar Options</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('founder')}
             className={`w-full text-left px-4 py-3.5 rounded-2xl font-mono text-xs flex items-center gap-3 transition-all cursor-pointer ${
               activeTab === 'founder' ? 'bg-primary text-ink font-bold shadow-lg shadow-primary/20' : 'text-slate hover:bg-white/5 hover:text-paper'
@@ -550,6 +613,148 @@ export const AdminPanel: React.FC = () => {
         {/* Tab Panels Content Area - Full Width */}
         <main className="flex-1 w-full bg-panel/75 border border-white/15 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
           
+          {/* TAB: NAVBAR */}
+          {activeTab === 'navbar' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="font-jakarta text-2xl font-black text-paper">Edit Navbar Header Options</h2>
+                  <p className="font-sans text-xs text-slate mt-1">
+                    Manage top navigation menu options, header CTA button, and brand logo.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleAddNavLink}
+                  className="px-4 py-2.5 rounded-xl bg-primary text-ink font-jakarta font-bold text-xs flex items-center gap-2 hover:bg-white transition-all cursor-pointer shadow-lg shadow-primary/20"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Nav Link Option</span>
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveNavbar} className="space-y-6 font-sans text-sm">
+                {/* Header CTA Button Settings */}
+                <div className="bg-black/60 border border-white/15 rounded-2xl p-5 space-y-4 shadow-xl">
+                  <h3 className="font-mono text-xs font-bold text-primary uppercase tracking-wider">// HEADER CTA BUTTON</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block font-mono text-xs text-slate mb-1">Header Button Text</label>
+                      <input
+                        type="text"
+                        name="navbarCtaText"
+                        defaultValue={data.navbar?.ctaText || "Start a Project"}
+                        placeholder="Start a Project"
+                        className="w-full bg-black/80 border border-white/15 rounded-xl px-4 py-3 text-paper focus:border-primary focus:outline-none font-bold text-xs"
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-mono text-xs text-slate mb-1">Header Button Target Link / Anchor</label>
+                      <input
+                        type="text"
+                        name="navbarCtaLink"
+                        defaultValue={data.navbar?.ctaLink || "#contact"}
+                        placeholder="#contact"
+                        className="w-full bg-black/80 border border-white/15 rounded-xl px-4 py-3 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Nav Links Manager */}
+                <div className="bg-black/60 border border-white/15 rounded-2xl p-5 space-y-4 shadow-xl">
+                  <h3 className="font-mono text-xs font-bold text-primary uppercase tracking-wider">// NAVIGATION LINKS</h3>
+                  <div className="space-y-3">
+                    {(data.navbar?.navLinks && data.navbar.navLinks.length > 0 ? data.navbar.navLinks : [
+                      { id: 'nav-1', name: 'SERVICES', href: '#services' },
+                      { id: 'nav-2', name: 'WORK', href: '#work' },
+                      { id: 'nav-3', name: 'PROCESS', href: '#process' },
+                      { id: 'nav-4', name: 'FOUNDER', href: '#founder' },
+                      { id: 'nav-5', name: 'MENTORS', href: '#mentors' },
+                      { id: 'nav-6', name: 'CONTACT', href: '#contact' },
+                    ]).map((link, idx, arr) => (
+                      <div key={link.id || idx} className="flex flex-col sm:flex-row items-center gap-3 bg-panel p-3.5 rounded-xl border border-white/10">
+                        <div className="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block font-mono text-[10px] text-slate mb-1">Link Name / Option Text</label>
+                            <input
+                              type="text"
+                              name={`navLinkName_${idx}`}
+                              defaultValue={link.name}
+                              placeholder="SERVICES"
+                              className="w-full bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-bold text-xs"
+                            />
+                          </div>
+                          <div>
+                            <label className="block font-mono text-[10px] text-slate mb-1">Target Link / Anchor (e.g. #services)</label>
+                            <input
+                              type="text"
+                              name={`navLinkHref_${idx}`}
+                              defaultValue={link.href}
+                              placeholder="#services"
+                              className="w-full bg-black/80 border border-white/15 rounded-lg px-3 py-2 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-1.5 self-end sm:self-center shrink-0">
+                          <button
+                            type="button"
+                            disabled={idx === 0}
+                            onClick={() => {
+                              moveArrayItem('navbar', 'navLinks', idx, 'up');
+                              showToast('Moved nav link up!');
+                            }}
+                            title="Move Up"
+                            className={`p-2 rounded-xl border border-white/10 font-mono text-xs flex items-center gap-1 cursor-pointer transition-all ${
+                              idx === 0 ? 'opacity-30 cursor-not-allowed bg-black/40 text-slate' : 'bg-panel-light text-primary hover:bg-primary/20 hover:border-primary/40'
+                            }`}
+                          >
+                            <ChevronUp className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
+                            disabled={idx === arr.length - 1}
+                            onClick={() => {
+                              moveArrayItem('navbar', 'navLinks', idx, 'down');
+                              showToast('Moved nav link down!');
+                            }}
+                            title="Move Down"
+                            className={`p-2 rounded-xl border border-white/10 font-mono text-xs flex items-center gap-1 cursor-pointer transition-all ${
+                              idx === arr.length - 1 ? 'opacity-30 cursor-not-allowed bg-black/40 text-slate' : 'bg-panel-light text-primary hover:bg-primary/20 hover:border-primary/40'
+                            }`}
+                          >
+                            <ChevronDown className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              deleteArrayItem('navbar', 'navLinks', link.id);
+                              showToast('Nav link deleted.');
+                            }}
+                            className="p-2.5 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors cursor-pointer"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    className="w-full py-4 rounded-xl bg-primary text-ink font-jakarta font-black text-sm uppercase tracking-wider hover:bg-white hover:shadow-xl hover:shadow-primary/30 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+                  >
+                    <Save className="w-4 h-4" />
+                    <span>Save Navbar Options</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
           {/* TAB: HERO */}
           {activeTab === 'hero' && (
             <div className="space-y-6">
