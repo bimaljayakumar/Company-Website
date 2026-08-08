@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSiteData } from '../context/DataContext';
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
 export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
+  const { data } = useSiteData();
+  const companyLogo = data?.footer?.companyLogo;
+  const companyName = data?.footer?.companyName || 'DO Company';
+
   const [progress, setProgress] = useState(0);
   const [isDone, setIsDone] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     let current = 0;
@@ -44,14 +50,25 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.4 }}
-              className="flex items-center gap-2"
+              className="flex items-center justify-center"
             >
-              <div className="w-12 h-12 rounded-xl bg-panel border border-white/10 flex items-center justify-center shadow-lg shadow-primary/10">
-                <span className="font-jakarta font-extrabold text-2xl tracking-tighter text-paper">
-                  DO
-                </span>
-                <span className="w-2 h-2 rounded-full bg-primary mb-3 ml-0.5 animate-pulse" />
-              </div>
+              {companyLogo && !imageError ? (
+                <div className="h-12 flex items-center justify-center px-2">
+                  <img
+                    src={companyLogo}
+                    alt={companyName}
+                    onError={() => setImageError(true)}
+                    className="h-10 sm:h-12 w-auto object-contain rounded-md"
+                  />
+                </div>
+              ) : (
+                <div className="w-12 h-12 rounded-xl bg-panel border border-white/10 flex items-center justify-center shadow-lg shadow-primary/10">
+                  <span className="font-jakarta font-extrabold text-2xl tracking-tighter text-paper">
+                    DO
+                  </span>
+                  <span className="w-2 h-2 rounded-full bg-primary mb-3 ml-0.5 animate-pulse" />
+                </div>
+              )}
             </motion.div>
 
             {/* Percentage count in mono font */}
