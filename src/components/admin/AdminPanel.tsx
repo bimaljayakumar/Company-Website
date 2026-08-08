@@ -302,6 +302,7 @@ export const AdminPanel: React.FC = () => {
     });
     updateSection('footer', {
       companyName: formData.get('companyName') as string,
+      companyLogo: formData.get('companyLogo') as string,
       description: formData.get('footerDesc') as string,
       addressLine1: formData.get('addressLine1') as string,
       addressLine2: formData.get('addressLine2') as string,
@@ -2209,11 +2210,45 @@ export const AdminPanel: React.FC = () => {
                     />
                   </div>
                   <div>
+                    <label className="block font-mono text-xs text-slate mb-1">Company Logo Image URL (Navbar & Footer)</label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        name="companyLogo"
+                        defaultValue={data.footer.companyLogo || ''}
+                        placeholder="https://.../logo.png or /images/logo.png"
+                        className="flex-1 bg-black/70 border border-white/15 rounded-xl px-4 py-3 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                      />
+                      {data.footer.companyLogo && (
+                        <div className="w-11 h-11 rounded-xl bg-panel border border-primary/40 p-1 flex items-center justify-center overflow-hidden shrink-0">
+                          <img
+                            src={data.footer.companyLogo}
+                            alt="Logo preview"
+                            className="w-full h-full object-contain"
+                            onError={(e) => (e.currentTarget.style.display = 'none')}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
                     <label className="block font-mono text-xs text-slate mb-1">Footer Email</label>
                     <input
                       type="text"
                       name="footerEmail"
                       defaultValue={data.footer.email}
+                      className="w-full bg-black/70 border border-white/15 rounded-xl px-4 py-3 text-paper focus:border-primary focus:outline-none font-mono text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-mono text-xs text-slate mb-1">Contact Phone Number</label>
+                    <input
+                      type="text"
+                      name="ctaPhone"
+                      defaultValue={data.cta.phone || "+1 (800) 450-BUILD"}
                       className="w-full bg-black/70 border border-white/15 rounded-xl px-4 py-3 text-paper focus:border-primary focus:outline-none font-mono text-xs"
                     />
                   </div>

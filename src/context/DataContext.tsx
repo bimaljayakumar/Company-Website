@@ -170,6 +170,7 @@ export interface FooterCapability {
 
 export interface FooterData {
   companyName?: string;
+  companyLogo?: string;
   description?: string;
   addressLine1?: string;
   addressLine2?: string;

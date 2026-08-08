@@ -89,9 +89,16 @@ export const Footer: React.FC = () => {
             <a
               href="#"
               onClick={(e) => handleFooterNavClick(e, '#')}
-              className="flex items-center gap-2.5 group max-w-full"
+              className="flex items-center gap-3 group max-w-full"
             >
-
+              {footer?.companyLogo && (
+                <img
+                  src={footer.companyLogo}
+                  alt={footer?.companyName || "Logo"}
+                  className="h-8 sm:h-9 w-auto object-contain shrink-0 rounded-md"
+                  onError={(e) => (e.currentTarget.style.display = 'none')}
+                />
+              )}
               <span className="font-jakarta text-base font-black tracking-wider text-paper uppercase truncate">
                 {footer.companyName || "DO Company"}
               </span>
