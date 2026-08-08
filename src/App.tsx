@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Preloader } from './components/Preloader';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TrustMarquee } from './components/TrustMarquee';
@@ -41,9 +40,6 @@ const MainPortfolio: React.FC = () => {
 
   return (
     <main className="min-h-screen bg-ink text-paper selection:bg-primary selection:text-ink relative">
-      {/* Branded Preloader */}
-      <Preloader onComplete={() => {}} />
-
       {/* Main Website Content */}
       <Navbar />
 
