@@ -404,7 +404,7 @@
     "items": [
       {
         "id": "test-2",
-        "quote": "Working with Marcus and team felt like having a senior engineering lead in-house. They guided our tech stack decisions and launched our MVP seamlessly.",
+        "quote": "\"They developed a clean and user-friendly medicine reminder application for my college project. The app was delivered on time, worked exactly as expected, and demonstrated excellent attention to detail. I truly appreciate his professionalism and technical skills.\"",
         "author": "Ajmal Sha S",
         "role": "College Student",
         "company": "MG University",
@@ -482,7 +482,8 @@
         "id": "cap-5",
         "label": "Automation Solutions"
       }
-    ]
+    ],
+    "companyLogo": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786197046/Do_PNG_ssyhu1.png"
   },
   "navbar": {
     "ctaText": "Start a Project",
@@ -521,5 +522,5 @@
     ]
   },
   "messages": [],
-  "version": 1786179412140
+  "version": 1786197641472
 }
