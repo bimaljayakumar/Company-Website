@@ -395,6 +395,14 @@
         "specialty": "Full Stack Development",
         "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786175720/IMG_20260808_132435.jpg_m9ihn0.jpg",
         "tag": "Full Stack Development"
+      },
+      {
+        "id": "item-1786213070983",
+        "name": "Ephriam Richardson",
+        "role": "Professional Mentor & Advisor",
+        "specialty": "Advisory & Consulting",
+        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786213072/Picsart_26-08-08_23-07-37-105.jpg_qtkadu.jpg",
+        "tag": "Mentor & Advisor"
       }
     ]
   },
@@ -522,5 +530,5 @@
     ]
   },
   "messages": [],
-  "version": 1786197641472
+  "version": 1786213231877
 }
