@@ -34,7 +34,7 @@ export const MentorsSection: React.FC = () => {
               >
                 <div>
                   {hasImage ? (
-                    <div className="relative h-72 sm:h-80 w-full rounded-2xl overflow-hidden mb-5 bg-panel-light group">
+                    <div className="relative h-56 sm:h-72 md:h-80 w-full rounded-2xl overflow-hidden mb-5 bg-panel-light group">
                       <img
                         src={mentor.image}
                         alt={mentor.name}
@@ -47,7 +47,7 @@ export const MentorsSection: React.FC = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="relative h-72 sm:h-80 w-full rounded-2xl overflow-hidden mb-5 bg-black/60 border border-white/10 p-6 flex flex-col items-center justify-center group-hover:border-primary/40 transition-all duration-300">
+                    <div className="relative h-56 sm:h-72 md:h-80 w-full rounded-2xl overflow-hidden mb-5 bg-black/60 border border-white/10 p-6 flex flex-col items-center justify-center group-hover:border-primary/40 transition-all duration-300">
                       <div className="w-20 h-20 rounded-2xl bg-panel border-2 border-primary/40 flex items-center justify-center shadow-lg shadow-primary/10 group-hover:scale-105 transition-all duration-300">
                         <span className="font-jakarta font-black text-2xl text-primary tracking-widest">
                           {mentor.name ? mentor.name.split(' ').map((n) => n[0]).join('') : 'DO'}
