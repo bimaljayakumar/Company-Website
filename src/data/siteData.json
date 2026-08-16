@@ -19,8 +19,8 @@
       "whats": false,
       "next": true
     },
-    "videoUrl": "no video",
-    "videoOpacity": 0,
+    "videoUrl": "https://res.cloudinary.com/ufo0zltq/video/upload/v1786898011/0816_ruo9xk.mp4",
+    "videoOpacity": 80,
     "description": "We design, engineer, and deploy high-performance web applications, cross-platform mobile apps, and custom site-builder infrastructure for forward-thinking enterprises.",
     "pillars": [
       "Transparent Pricing",
@@ -530,5 +530,5 @@
     ]
   },
   "messages": [],
-  "version": 1786213231877
+  "version": 1786898019713
 }
