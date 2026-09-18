@@ -409,19 +409,19 @@
         "name": "Ajmal Sha S",
         "role": "Professional Mentor & Advisor",
         "specialty": "Advisory & Consulting",
-        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1789719820/Picsart_26-09-18_13-07-25-856_e0b7fk.jpg",
+        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1789721662/Picsart_26-09-18_14-21-06-352_marbir.jpg",
         "tag": "Mentor & Advisor"
       }
     ]
   },
   "testimonials": {
     "eyebrow": "// TESTIMONIALS",
-    "title": "What founders and technical leaders say.",
+    "title": "What People Say About Us",
     "items": [
       {
         "id": "test-2",
-        "quote": "\"They developed a clean and user-friendly medicine reminder application for my college project. The app was delivered on time, worked exactly as expected, and demonstrated excellent attention to detail. I truly appreciate his professionalism and technical skills.\"",
-        "author": "Ajmal Sha S",
+        "quote": "\"They developed a clean and user-friendly weather application for my college project. The app was delivered on time, worked exactly as expected, and demonstrated excellent attention to detail. I truly appreciate his professionalism and technical skills.\"",
+        "author": "Jinsmon Varghese",
         "role": "College Student",
         "company": "MG University",
         "image": ""
@@ -538,5 +538,5 @@
     ]
   },
   "messages": [],
-  "version": 1789719872874
+  "version": 1789722133092
 }
