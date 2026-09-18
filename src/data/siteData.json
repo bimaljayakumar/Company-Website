@@ -411,6 +411,14 @@
         "specialty": "Advisory & Consulting",
         "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1789721662/Picsart_26-09-18_14-21-06-352_marbir.jpg",
         "tag": "Mentor & Advisor"
+      },
+      {
+        "id": "item-1789725699446",
+        "name": "Krishnadev S",
+        "role": "UI/UX Designer",
+        "specialty": "User Experience Design",
+        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1789725829/Picsart_26-09-18_15-24-05-440.jpg_keijlo.jpg",
+        "tag": "UI/UX Design"
       }
     ]
   },
@@ -538,5 +546,5 @@
     ]
   },
   "messages": [],
-  "version": 1789722133092
+  "version": 1789725858953
 }
