@@ -403,6 +403,14 @@
         "specialty": "Advisory & Consulting",
         "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1786213072/Picsart_26-08-08_23-07-37-105.jpg_qtkadu.jpg",
         "tag": "Mentor & Advisor"
+      },
+      {
+        "id": "item-1789719289572",
+        "name": "Ajmal Sha S",
+        "role": "Professional Mentor & Advisor",
+        "specialty": "Advisory & Consulting",
+        "image": "https://res.cloudinary.com/ufo0zltq/image/upload/v1789719820/Picsart_26-09-18_13-07-25-856_e0b7fk.jpg",
+        "tag": "Mentor & Advisor"
       }
     ]
   },
@@ -530,5 +538,5 @@
     ]
   },
   "messages": [],
-  "version": 1786903014991
+  "version": 1789719872874
 }
